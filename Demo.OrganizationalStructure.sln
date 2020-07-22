@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Client.WPF", "Demo.OrganizationalStructure.Client.WPF\Demo.OrganizationalStructure.Client.WPF.csproj", "{22527038-F1FA-402E-BB6D-C2635DEC29B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Common", "Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj", "{2AA41170-70A1-4E37-98B0-53FCC597CE38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{22527038-F1FA-402E-BB6D-C2635DEC29B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22527038-F1FA-402E-BB6D-C2635DEC29B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22527038-F1FA-402E-BB6D-C2635DEC29B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
