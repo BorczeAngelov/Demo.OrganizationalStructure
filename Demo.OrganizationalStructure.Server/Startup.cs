@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Demo.OrganizationalStructure.Common.Utils;
+using Demo.OrganizationalStructure.Server.SignalRHubs;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +30,7 @@ namespace Demo.OrganizationalStructure.Server
 
             app.UseEndpoints(endpoints =>
             {
-                //TODO: here map hub with url                
+                endpoints.MapHub<OrgaSHub>(DemoUrlConstants.OrgaSHubEndpoint);
             });
         }
     }
