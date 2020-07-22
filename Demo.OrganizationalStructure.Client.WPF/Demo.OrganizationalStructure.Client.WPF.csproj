@@ -13,4 +13,8 @@
     <Folder Include="Utils\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj" />
+  </ItemGroup>
+
 </Project>
