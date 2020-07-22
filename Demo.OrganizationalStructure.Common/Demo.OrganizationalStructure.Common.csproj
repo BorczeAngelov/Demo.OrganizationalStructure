@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="DataModel\" />
-    <Folder Include="HubInterfaces\" />
   </ItemGroup>
 
 </Project>
