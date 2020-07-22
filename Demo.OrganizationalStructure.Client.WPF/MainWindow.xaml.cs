@@ -1,45 +1,24 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
-using System;
+﻿using Demo.OrganizationalStructure.Client.WPF.ViewModel;
 using System.Windows;
 
 namespace Demo.OrganizationalStructure.Client.WPF
 {
     public partial class MainWindow : Window
     {
-        private readonly OrgaSHubClientTwoWayComm _orgaSHubClientTwoWayComm;
+        private readonly MainWindowVM _mainWindowVM;
 
         public MainWindow()
         {
             InitializeComponent();
-            PingServerButton.IsEnabled = false;
+            _mainWindowVM = new MainWindowVM();
+            DataContext = _mainWindowVM;
 
-            _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm();
-
-            _orgaSHubClientTwoWayComm.PongedDemo += ResponeToPongFromServer;
+            _mainWindowVM.ShowMessageBox += ShowMessageBox;
         }
 
-        private async void Connect(object sender, RoutedEventArgs e)
+        private void ShowMessageBox(string message, string caption)
         {
-            try
-            {
-                await _orgaSHubClientTwoWayComm.ConnectWithServerHub();
-                ConnectButton.IsEnabled = false;
-                PingServerButton.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private async void PingServer(object sender, RoutedEventArgs e)
-        {
-            await _orgaSHubClientTwoWayComm.ServerHubProxy.PingDemo();
-        }
-
-        private void ResponeToPongFromServer()
-        {
-            MessageBox.Show(this, "Pong", "Message from Server");
+            MessageBox.Show(this, message, caption);
         }
     }
 }

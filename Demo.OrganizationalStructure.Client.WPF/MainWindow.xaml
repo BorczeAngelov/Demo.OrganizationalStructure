@@ -5,23 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF"
         mc:Ignorable="d"
-        Title="MainWindow"
-        Height="450"
-        Width="800">
+        Title="Organizational Structure WPF Client"
+        Height="300"
+        Width="400">
     <Grid>
+        <StackPanel VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Margin="5">
 
-        <Button x:Name="ConnectButton"
-                Content="Connect"
-                Click="Connect"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="20" />
+            <Button Content="Connect"
+                    Command="{Binding ConnectCommand}" 
+                    Padding="5,0"/>
 
-
-        <Button x:Name="PingServerButton"
-                Content="Ping Server"
-                Click="PingServer"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center" />
+            <Button Content="(Demo) Ping server"
+                    Command="{Binding PingServerCommand}" 
+                    Margin="5,0,0,0"
+                    Padding="5,0"/>
+        </StackPanel>
     </Grid>
 </Window>
