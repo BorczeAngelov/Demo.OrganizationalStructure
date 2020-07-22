@@ -6,4 +6,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="HubClientTwoWayComm\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
 </Project>
