@@ -15,6 +15,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public event Action<JobRole> JobRoleCreated;
         public event Action<JobRole> JobRoleUpdated;
         public event Action<JobRole> JobRoleDeleted;
+        public event Action<Employee> EmployeeCreated;
+        public event Action<Employee> EmployeeUpdated;
+        public event Action<Employee> EmployeeDeleted;
 
         internal OrgaSHubClientTwoWayComm()
         {
@@ -27,6 +30,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             _serverConnection.On<JobRole>(nameof(InvokeCreateJobRole), InvokeCreateJobRole);
             _serverConnection.On<JobRole>(nameof(InvokeUpdateJobRole), InvokeUpdateJobRole);
             _serverConnection.On<JobRole>(nameof(InvokeDeleteJobRole), InvokeDeleteJobRole);
+            _serverConnection.On<Employee>(nameof(InvokeCreateEmployee), InvokeCreateEmployee);
+            _serverConnection.On<Employee>(nameof(InvokeUpdateEmployee), InvokeUpdateEmployee);
+            _serverConnection.On<Employee>(nameof(InvokeDeleteEmployee), InvokeDeleteEmployee);
 
             ServerHubProxy = new ServerHubProxyImp(_serverConnection);
         }
@@ -58,6 +64,22 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             JobRoleDeleted?.Invoke(jobRole);
         }
 
+
+        public void InvokeCreateEmployee(Employee employee)
+        {
+            EmployeeCreated?.Invoke(employee);
+        }
+
+        public void InvokeUpdateEmployee(Employee employee)
+        {
+            EmployeeUpdated?.Invoke(employee);
+        }
+
+        public void InvokeDeleteEmployee(Employee employee)
+        {
+            EmployeeDeleted?.Invoke(employee);
+        }
+
         #region private class ServerHubProxyImp
         private class ServerHubProxyImp : IOrgaSHub
         {
@@ -86,6 +108,21 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             public Task DeleteJobRole(JobRole jobRole)
             {
                 return _serverConnection.InvokeAsync(nameof(DeleteJobRole), jobRole);
+            }
+
+            public Task UpdateEmployee(Employee employee)
+            {
+                return _serverConnection.InvokeAsync(nameof(UpdateEmployee), employee);
+            }
+
+            public Task CreateEmployee(Employee employee)
+            {
+                return _serverConnection.InvokeAsync(nameof(CreateEmployee), employee);
+            }
+
+            public Task DeleteEmployee(Employee employee)
+            {
+                return _serverConnection.InvokeAsync(nameof(DeleteEmployee), employee);
             }
         }
         #endregion

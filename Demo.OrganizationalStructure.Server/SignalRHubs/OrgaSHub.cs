@@ -12,6 +12,7 @@ namespace Demo.OrganizationalStructure.Server.SignalRHubs
             await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokePongDemo));
         }
 
+
         public async Task CreateJobRole(JobRole jobRole)
         {
             await Clients.Others.SendAsync(nameof(IOrgaSHubClient.InvokeCreateJobRole), jobRole);
@@ -25,6 +26,22 @@ namespace Demo.OrganizationalStructure.Server.SignalRHubs
         public async Task DeleteJobRole(JobRole jobRole)
         {
             await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokeDeleteJobRole), jobRole);
+        }
+
+
+        public async Task CreateEmployee(Employee employee)
+        {
+            await Clients.Others.SendAsync(nameof(IOrgaSHubClient.InvokeCreateEmployee), employee);
+        }
+
+        public async Task UpdateEmployee(Employee employee)
+        {
+            await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokeUpdateEmployee), employee);
+        }
+
+        public async Task DeleteEmployee(Employee employee)
+        {
+            await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokeDeleteEmployee), employee);
         }
     }
 }
