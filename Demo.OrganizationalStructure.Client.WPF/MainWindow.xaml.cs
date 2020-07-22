@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Demo.OrganizationalStructure.Client.WPF
 {
@@ -20,9 +8,18 @@ namespace Demo.OrganizationalStructure.Client.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly OrgaSHubClientTwoWayComm _orgaSHubClientTwoWayComm;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm();
+        }
+
+        private async void Connect(object sender, RoutedEventArgs e)
+        {
+            await _orgaSHubClientTwoWayComm.ConnectWithServerHub();
         }
     }
 }

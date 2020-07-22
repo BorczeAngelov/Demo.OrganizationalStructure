@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="HubClientTwoWayComm\" />
     <Folder Include="ViewModel\" />
     <Folder Include="View\" />
     <Folder Include="Utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.6" />
   </ItemGroup>
 
   <ItemGroup>
