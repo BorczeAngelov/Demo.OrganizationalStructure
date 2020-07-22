@@ -1,6 +1,7 @@
 ﻿using Demo.OrganizationalStructure.Common.HubInterfaces;
 using Demo.OrganizationalStructure.Common.Utils;
 using Microsoft.AspNetCore.SignalR.Client;
+using System;
 using System.Threading.Tasks;
 
 namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
@@ -9,12 +10,16 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
     {
         private readonly HubConnection _serverConnection;
 
+        public event Action PongedDemo;
+
         internal OrgaSHubClientTwoWayComm()
         {
             _serverConnection = new HubConnectionBuilder()
                 .WithUrl(DemoUrlConstants.LocalHostUrl + DemoUrlConstants.OrgaSHubEndpoint)
                 .WithAutomaticReconnect()
                 .Build();
+
+            _serverConnection.On(nameof(InvokePongDemo), InvokePongDemo);
 
             ServerHubProxy = new ServerHubProxyImp(_serverConnection);
         }
@@ -26,6 +31,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             await _serverConnection.StartAsync();
         }
 
+        public void InvokePongDemo()
+        {
+            PongedDemo?.Invoke();
+        }
+
         #region private class ServerHubProxyImp
         private class ServerHubProxyImp : IOrgaSHub
         {
@@ -34,6 +44,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             internal ServerHubProxyImp(HubConnection serverConnection)
             {
                 _serverConnection = serverConnection;
+            }
+
+            public Task PingDemo()
+            {
+                return _serverConnection.InvokeAsync(nameof(PingDemo));
             }
         }
         #endregion

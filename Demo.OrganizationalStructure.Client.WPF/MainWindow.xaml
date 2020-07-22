@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800">
     <Grid>
-        <Button Content="Connect" 
+
+        <Button x:Name="ConnectButton"
+                Content="Connect"
+                Click="Connect"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="20" />
+
+
+        <Button x:Name="PingServerButton"
+                Content="Ping Server"
+                Click="PingServer"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Click="Connect"/>
+                HorizontalAlignment="Center" />
     </Grid>
 </Window>
