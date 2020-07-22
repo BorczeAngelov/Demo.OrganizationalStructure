@@ -8,6 +8,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     public class MainWindowVM : ObservableBase
     {
         private readonly OrgaSHubClientTwoWayComm _orgaSHubClientTwoWayComm;
+
+        public OrganizationalStructureVM OrganizationalStructureVM { get; private set; }
+
         private bool _isConnected;
 
         public event Action<string, string> ShowMessageBox;
@@ -15,12 +18,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         internal MainWindowVM()
         {
             _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm();
-            _orgaSHubClientTwoWayComm.PongedDemo += ResponeToPongFromServer;
+            OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm);
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
             PingServerCommand = new DelegateCommand(PingServer, arg => IsConnected);
 
             PropertyChanged += RefreshCommandsWhenIsConnectedChanges;
+            _orgaSHubClientTwoWayComm.PongedDemo += ResponeToPongFromServer;
         }
 
         public DelegateCommand ConnectCommand { get; }
@@ -59,7 +63,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void ResponeToPongFromServer()
         {
-            ShowMessageBox?.Invoke("Pong", "Message from Server");
+            ShowMessageBox?.Invoke("Pong", "Message from server");
         }
 
         private void RefreshCommandsWhenIsConnectedChanges(object sender, PropertyChangedEventArgs e)

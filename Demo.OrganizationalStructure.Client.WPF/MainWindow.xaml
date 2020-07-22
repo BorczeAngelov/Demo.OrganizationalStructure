@@ -4,24 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF"
+        xmlns:view="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
         mc:Ignorable="d"
         Title="Organizational Structure WPF Client"
-        Height="300"
+        Height="320"
         Width="400">
     <Grid>
-        <StackPanel VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    Orientation="Horizontal"
-                    Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <Button Content="Connect"
-                    Command="{Binding ConnectCommand}" 
-                    Padding="5,0"/>
+        <view:OrganizationalStructure DataContext="{Binding OrganizationalStructureVM}" />
 
-            <Button Content="(Demo) Ping server"
-                    Command="{Binding PingServerCommand}" 
-                    Margin="5,0,0,0"
-                    Padding="5,0"/>
-        </StackPanel>
+        <Border Grid.Row="1"
+                BorderThickness="0,2,0,0"
+                BorderBrush="LightGray">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="3">
+                
+                <Button Content="Connect"
+                        Command="{Binding ConnectCommand}"
+                        Padding="5,0" />
+
+                <Button Content="(Demo) Ping server"
+                        Command="{Binding PingServerCommand}"
+                        Margin="5,0,0,0"
+                        Padding="5,0" />
+            </StackPanel>
+        </Border>
+
+
     </Grid>
 </Window>
