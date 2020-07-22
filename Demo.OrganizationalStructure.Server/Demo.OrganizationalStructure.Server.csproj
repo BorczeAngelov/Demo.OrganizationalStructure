@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj" />
   </ItemGroup>
 
