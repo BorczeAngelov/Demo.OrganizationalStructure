@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="ViewModel\" />
     <Folder Include="View\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>
