@@ -40,6 +40,7 @@
                     Margin="5" />
 
             <ListView ItemsSource="{Binding JobRoles}"
+                      SelectedItem="{Binding SelectedItem}"
                       Grid.Column="0"
                       Grid.Row="1">
                 <ListView.ItemTemplate>
@@ -50,6 +51,7 @@
             </ListView>
 
             <ListView ItemsSource="{Binding Employees}"
+                      SelectedItem="{Binding SelectedItem}"
                       Grid.Column="1"
                       Grid.Row="1">
                 <ListView.ItemTemplate>
@@ -68,6 +70,18 @@
                       HorizontalAlignment="Stretch" />
 
         <Grid Grid.Column="2">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItem}"
+                                     Value="{x:Null}">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            
             <local:SelectedEditableItem DataContext="{Binding SelectedItem}" />
         </Grid>
     </Grid>
