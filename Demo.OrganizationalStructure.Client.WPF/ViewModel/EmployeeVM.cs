@@ -1,5 +1,6 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
+using System;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -15,8 +16,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 : base(twoWayComm, isNewAndUnsaved)
         {
             _dataModel = dataModel;
-            Name = _dataModel.Name;
+            CopyDataFromModel(dataModel);
         }
+
+        public Guid EntityKey { get => _dataModel.EntityKey; }
 
         public string Name
         {
@@ -39,6 +42,21 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         protected override void Save()
         {
             TwoWayComm.ServerHubProxy.UpdateEmployee(_dataModel);
+        }
+
+        protected override void DiscardChanges()
+        {
+            CopyDataFromModel(_dataModel);
+        }
+
+        protected override void Delete()
+        {
+            TwoWayComm.ServerHubProxy.DeleteEmployee(_dataModel);
+        }
+
+        private void CopyDataFromModel(Employee model)
+        {
+            Name = model.Name;
         }
     }
 }

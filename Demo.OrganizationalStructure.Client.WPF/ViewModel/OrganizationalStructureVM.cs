@@ -3,6 +3,8 @@ using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -20,6 +22,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             _twoWayComm.JobRoleCreated += AddNewJobRoleFromServer;
             _twoWayComm.EmployeeCreated += AddNewEmployeeFromServer;
+
+            _twoWayComm.JobRoleDeleted += RemoveLocalJob;
+            _twoWayComm.EmployeeDeleted += RemoveLocalEmployee;
         }
 
         public DelegateCommand AddJobRoleCommand { get; }
@@ -60,14 +65,44 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void AddNewJobRoleFromServer(JobRole jobRole)
         {
+            Debug.Assert(!JobRoles.Any(x => x.EntityKey == jobRole.EntityKey));
+
             var jobRoleVM = new JobRoleVM(_twoWayComm, jobRole);
             JobRoles.Add(jobRoleVM);
         }
 
         private void AddNewEmployeeFromServer(Employee employee)
         {
+            Debug.Assert(!Employees.Any(x => x.EntityKey == employee.EntityKey));
+
             var employeeVM = new EmployeeVM(_twoWayComm, employee);
             Employees.Add(employeeVM);
+        }
+
+        private void RemoveLocalJob(JobRole jobRole)
+        {
+            var localJobRoleVM = JobRoles.FirstOrDefault(x => x.EntityKey == jobRole.EntityKey);
+            if (localJobRoleVM != null)
+            {
+                JobRoles.Remove(localJobRoleVM);
+                if (SelectedItem == localJobRoleVM)
+                {
+                    SelectedItem = null;
+                }
+            }
+        }
+
+        private void RemoveLocalEmployee(Employee employee)
+        {
+            var localEmployeeVM = Employees.FirstOrDefault(x => x.EntityKey == employee.EntityKey);
+            if (localEmployeeVM != null)
+            {
+                Employees.Remove(localEmployeeVM);
+                if (SelectedItem == localEmployeeVM)
+                {
+                    SelectedItem = null;
+                }
+            }
         }
     }
 }
