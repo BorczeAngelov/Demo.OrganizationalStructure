@@ -22,7 +22,8 @@
 
             <CheckBox Content="Is new and unsaved"
                       IsChecked="{Binding IsNewAndUnsaved, Mode=OneWay}"
-                      DockPanel.Dock="Right" 
+                      IsEnabled="False"
+                      DockPanel.Dock="Right"
                       Margin="0,0,5,0"/>
         </DockPanel>
 
