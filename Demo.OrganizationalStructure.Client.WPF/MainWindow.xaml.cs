@@ -18,6 +18,7 @@ namespace Demo.OrganizationalStructure.Client.WPF
 
         private void ShowMessageBox(string message, string caption)
         {
+            Activate();
             MessageBox.Show(this, message, caption);
         }
     }
