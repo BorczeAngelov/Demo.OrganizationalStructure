@@ -36,11 +36,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         protected override void SaveNew()
         {
+            CopyDataToModel();
             TwoWayComm.ServerHubProxy.CreateEmployee(_dataModel);
         }
 
         protected override void Save()
         {
+            CopyDataToModel();
             TwoWayComm.ServerHubProxy.UpdateEmployee(_dataModel);
         }
 
@@ -57,6 +59,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void CopyDataFromModel(Employee model)
         {
             Name = model.Name;
+        }
+        private void CopyDataToModel()
+        {
+            _dataModel.Name = Name;
         }
     }
 }
