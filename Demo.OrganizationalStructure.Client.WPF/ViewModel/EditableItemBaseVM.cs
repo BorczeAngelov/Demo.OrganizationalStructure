@@ -1,6 +1,7 @@
 ﻿using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
+using System.ComponentModel;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -23,8 +24,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             IsNewAndUnsaved = isNewAndUnsaved;
 
             SaveCommand = new DelegateCommand(Save, arg => IsNewAndUnsaved || IsModified);
-            CancelCommand = new DelegateCommand(Cancel, arg => IsModified);
+            CancelCommand = new DelegateCommand(Cancel, arg => !IsNewAndUnsaved && IsModified);
             DeleteCommand = new DelegateCommand(Delete);
+
+            PropertyChanged += WhenAnyPropertyIsChangedMarkAsModified;
         }
 
         public DelegateCommand SaveCommand { get; }
@@ -70,6 +73,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 SaveNew();
                 IsNewAndUnsaved = false;
             }
+            IsModified = false;
         }
 
         private void Cancel(object obj)
@@ -80,6 +84,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void Delete(object obj)
         {
             Delete();
+        }
+
+        private void WhenAnyPropertyIsChangedMarkAsModified(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(IsModified))
+            {
+                IsModified = true;
+            }
         }
     }
 }
