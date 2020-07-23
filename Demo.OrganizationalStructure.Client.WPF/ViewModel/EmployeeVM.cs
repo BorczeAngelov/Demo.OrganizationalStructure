@@ -1,20 +1,27 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
     public class EmployeeVM : EditableItemBaseVM
     {
-        private Employee _dataModel;
+        private Employee _dataModel
+            ;
         private string _name;
+        private JobRoleVM _jobRole;
 
         internal EmployeeVM(
             IOrgaSHubClientTwoWayComm twoWayComm,
             Employee dataModel,
+            ObservableCollection<JobRoleVM> existingJobRoleVMs,
             bool isNewAndUnsaved = false)
                 : base(twoWayComm, isNewAndUnsaved)
         {
+            ExistingJobRoleVMs = existingJobRoleVMs;
+
             _dataModel = dataModel;
             CopyDataFromModel();
 
@@ -31,6 +38,20 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 if (_name != value)
                 {
                     _name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<JobRoleVM> ExistingJobRoleVMs { get; }
+        public JobRoleVM JobRole
+        {
+            get => _jobRole;
+            set
+            {
+                if (_jobRole != value)
+                {
+                    _jobRole = value;
                     OnPropertyChanged();
                 }
             }
@@ -62,7 +83,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             var isSameEntity = _dataModel.EntityKey == employeeFromServer.EntityKey;
             if (isSameEntity)
-            {                
+            {
                 _dataModel = employeeFromServer;
                 CopyDataFromModel();
             }
@@ -71,12 +92,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void CopyDataFromModel()
         {
             Name = _dataModel.Name;
-            // _dataModel.JobRoleEntityKey
+            JobRole = ExistingJobRoleVMs.FirstOrDefault(x => x.EntityKey == _dataModel.JobRoleEntityKey);
         }
 
         private void CopyDataToModel()
         {
             _dataModel.Name = Name;
+            _dataModel.JobRoleEntityKey = (JobRole != null) ? JobRole.EntityKey : Guid.Empty;
         }
     }
 }

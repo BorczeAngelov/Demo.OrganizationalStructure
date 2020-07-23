@@ -66,7 +66,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void CreateNewEmployee(object obj)
         {
             var dataModel = new Employee() { Name = "New employee", EntityKey = Guid.NewGuid() };
-            var employeeVM = new EmployeeVM(_twoWayComm, dataModel, isNewAndUnsaved: true);
+            var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
             Employees.Add(employeeVM);
 
             SelectedItem = employeeVM;
@@ -84,7 +84,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             Debug.Assert(!Employees.Any(x => x.EntityKey == employee.EntityKey));
 
-            var employeeVM = new EmployeeVM(_twoWayComm, employee);
+            var employeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles);
             Employees.Add(employeeVM);
         }
 
