@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -39,6 +40,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 if (_selectedItem != value)
                 {
+                    //if (!ShouldChangeSelectionHelper())
+                    //{ return; }
+
                     _selectedItem = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(SelectedJobRole));
@@ -109,5 +113,43 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 }
             }
         }
+
+        //private bool ShouldChangeSelectionHelper()
+        //{
+        //    var result = true;
+        //    if (_selectedItem?.IsNewAndUnsaved == true)
+        //    {
+        //        var answer = AskUserIfNewUnsavedDataEntryShouldBeDeleted();
+        //        result = answer == MessageBoxResult.Yes;
+        //        if (result)
+        //        {
+        //            if (SelectedItem is EmployeeVM employeeVM)
+        //            {
+        //                Employees.Remove(employeeVM);
+        //            }
+        //            else
+        //            {
+        //                JobRoles.Remove(SelectedJobRole);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            result = false;
+        //        }
+        //    }
+        //    return result;
+        //}
+
+        //private MessageBoxResult AskUserIfNewUnsavedDataEntryShouldBeDeleted()
+        //{
+        //    const string Caption = "Unsaved new data entry";
+        //    const string MessageBoxText = "Your new data entry is not saved. If you select another element, the current data will be lost. Continue anyway?";
+        //    var answer = MessageBox.Show(
+        //        MessageBoxText,
+        //        Caption,
+        //        MessageBoxButton.YesNo,
+        //        MessageBoxImage.Question);
+        //    return answer;
+        //}
     }
 }
