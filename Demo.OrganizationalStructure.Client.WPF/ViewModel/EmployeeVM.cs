@@ -6,7 +6,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
     public class EmployeeVM : EditableItemBaseVM
     {
-        private readonly Employee _dataModel;
+        private Employee _dataModel;
         private string _name;
 
         internal EmployeeVM(
@@ -16,7 +16,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 : base(twoWayComm, isNewAndUnsaved)
         {
             _dataModel = dataModel;
-            CopyDataFromModel(dataModel);
+            CopyDataFromModel();
+
+            TwoWayComm.EmployeeUpdated += UpdateDataIfIsSameEntity;
         }
 
         public Guid EntityKey { get => _dataModel.EntityKey; }
@@ -48,7 +50,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         protected override void DiscardChanges()
         {
-            CopyDataFromModel(_dataModel);
+            CopyDataFromModel();
         }
 
         protected override void Delete()
@@ -56,10 +58,22 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             TwoWayComm.ServerHubProxy.DeleteEmployee(_dataModel);
         }
 
-        private void CopyDataFromModel(Employee model)
+        private void UpdateDataIfIsSameEntity(Employee employeeFromServer)
         {
-            Name = model.Name;
+            var isSameEntity = _dataModel.EntityKey == employeeFromServer.EntityKey;
+            if (isSameEntity)
+            {                
+                _dataModel = employeeFromServer;
+                CopyDataFromModel();
+            }
         }
+
+        private void CopyDataFromModel()
+        {
+            Name = _dataModel.Name;
+            // _dataModel.JobRoleEntityKey
+        }
+
         private void CopyDataToModel()
         {
             _dataModel.Name = Name;

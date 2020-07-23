@@ -5,11 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
              mc:Ignorable="d"
-             d:DesignWidth="400"
-             d:DesignHeight="450">
+             d:DesignWidth="600"
+             d:DesignHeight="450"
+             Padding="5">
     <Grid>
-        <TextBlock Text="Hello world from EditJobRole" 
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"
+                              MinWidth="120" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="200" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Job role name:"
+                   Grid.Row="0"
+                   Grid.Column="0" />
+
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0"
+                 Grid.Column="2" />
     </Grid>
 </UserControl>
