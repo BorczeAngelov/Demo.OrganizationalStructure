@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             d:DesignWidth="600"
+             d:DesignHeight="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"
@@ -56,7 +58,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
         </Grid>
 
         <GridSplitter Grid.Column="1"
@@ -66,10 +68,7 @@
                       HorizontalAlignment="Stretch" />
 
         <Grid Grid.Column="2">
-            <TextBlock Text="Hello World"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
+            <local:SelectedEditableItem DataContext="{Binding SelectedItem}" />
         </Grid>
-
     </Grid>
 </UserControl>
