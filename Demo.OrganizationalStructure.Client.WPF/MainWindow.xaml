@@ -7,15 +7,17 @@
         xmlns:view="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
         mc:Ignorable="d"
         Title="Organizational Structure WPF Client"
-        Height="320"
-        Width="400">
+        Height="450"
+        Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <view:OrganizationalStructure DataContext="{Binding OrganizationalStructureVM}" />
+        <Grid IsEnabled="{Binding IsConnected}">
+            <view:OrganizationalStructure DataContext="{Binding OrganizationalStructureVM}" />
+        </Grid>
 
         <Border Grid.Row="1"
                 BorderThickness="0,2,0,0"
@@ -23,7 +25,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="3">
-                
+
                 <Button Content="Connect"
                         Command="{Binding ConnectCommand}"
                         Padding="5,0" />

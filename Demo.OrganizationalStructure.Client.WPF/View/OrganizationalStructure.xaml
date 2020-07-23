@@ -4,12 +4,72 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
-             mc:Ignorable="d"
-             Height="300"
-             Width="400">
+             mc:Ignorable="d">
     <Grid>
-        <TextBlock Text="Hello world"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"
+                              MinWidth="200" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*"
+                              MinWidth="80" />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="100" />
+                <ColumnDefinition MinWidth="100" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Add Job Role"
+                    Command="{Binding AddJobRoleCommand}"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Margin="5" />
+
+            <Button Content="Add Employee"
+                    Command="{Binding AddEmployeeCommand}"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Margin="5" />
+
+            <ListView ItemsSource="{Binding JobRoles}"
+                      Grid.Column="0"
+                      Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView ItemsSource="{Binding Employees}"
+                      Grid.Column="1"
+                      Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </Grid>
+
+        <GridSplitter Grid.Column="1"
+                      ResizeDirection="Columns"
+                      ResizeBehavior="PreviousAndNext"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch" />
+
+        <Grid Grid.Column="2">
+            <TextBlock Text="Hello World"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+        </Grid>
+
     </Grid>
 </UserControl>
