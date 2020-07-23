@@ -14,7 +14,7 @@
                               MinWidth="400" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*"
-                              MinWidth="80" />
+                              MinWidth="400" />
         </Grid.ColumnDefinitions>
 
         <Grid>
