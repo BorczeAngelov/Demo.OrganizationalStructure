@@ -20,14 +20,27 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Job role name:"
+        <TextBlock Text="Name:"
                    Grid.Row="0"
                    Grid.Column="0" />
 
         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="0"
+                 Grid.Column="2" />
+
+        <TextBlock Text="Description:"
+                   Grid.Row="2"
+                   Grid.Column="0" />
+
+        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                 Height="100"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 Grid.Row="2"
                  Grid.Column="2" />
     </Grid>
 </UserControl>

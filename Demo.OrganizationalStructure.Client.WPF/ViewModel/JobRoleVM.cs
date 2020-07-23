@@ -8,6 +8,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     {
         private JobRole _dataModel;
         private string _name;
+        private string _description;
 
         internal JobRoleVM(
             IOrgaSHubClientTwoWayComm twoWayComm,
@@ -31,6 +32,19 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 if (_name != value)
                 {
                     _name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
                     OnPropertyChanged();
                 }
             }
@@ -71,12 +85,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void CopyDataFromModel()
         {
             Name = _dataModel.Name;
-            // _dataModel.Description
+            Description = _dataModel.Description;
         }
 
         private void CopyDataToModel()
         {
             _dataModel.Name = Name;
+            _dataModel.Description = Description;
         }
     }
 }
