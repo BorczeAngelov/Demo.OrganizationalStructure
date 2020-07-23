@@ -6,9 +6,10 @@ using System.Collections.ObjectModel;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
-    public class OrganizationalStructureVM
+    public class OrganizationalStructureVM : ObservableBase
     {
         private readonly IOrgaSHubClientTwoWayComm _twoWayComm;
+        private EditableItemBaseVM _selectedItem;
 
         internal OrganizationalStructureVM(IOrgaSHubClientTwoWayComm twoWayComm)
         {
@@ -26,11 +27,26 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         public ObservableCollection<JobRoleVM> JobRoles { get; } = new ObservableCollection<JobRoleVM>();
         public ObservableCollection<EmployeeVM> Employees { get; } = new ObservableCollection<EmployeeVM>();
 
+        public EditableItemBaseVM SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private void CreateNewJobRole(object obj)
         {
             var dataModel = new JobRole() { Name = "New job role", EntityKey = Guid.NewGuid() };
             var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, isNewAndUnsaved: true);
             JobRoles.Add(jobRoleVM);
+
+            SelectedItem = jobRoleVM;
         }
 
         private void CreateNewEmployee(object obj)
@@ -38,6 +54,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             var dataModel = new Employee() { Name = "New employee", EntityKey = Guid.NewGuid() };
             var employeeVM = new EmployeeVM(_twoWayComm, dataModel, isNewAndUnsaved: true);
             Employees.Add(employeeVM);
+
+            SelectedItem = employeeVM;
         }
 
         private void AddNewJobRoleFromServer(JobRole jobRole)
