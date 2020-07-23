@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
+             xmlns:viewModel="clr-namespace:Demo.OrganizationalStructure.Client.WPF.ViewModel"
              mc:Ignorable="d"
              d:DesignWidth="600"
              d:DesignHeight="450">
@@ -40,7 +41,7 @@
                     Margin="5" />
 
             <ListView ItemsSource="{Binding JobRoles}"
-                      SelectedItem="{Binding SelectedItem}"
+                      SelectedItem="{Binding SelectedJobRole}"
                       Grid.Column="0"
                       Grid.Row="1">
                 <ListView.ItemTemplate>
@@ -51,7 +52,7 @@
             </ListView>
 
             <ListView ItemsSource="{Binding Employees}"
-                      SelectedItem="{Binding SelectedItem}"
+                      SelectedItem="{Binding SelectedEmployee}"
                       Grid.Column="1"
                       Grid.Row="1">
                 <ListView.ItemTemplate>
@@ -81,7 +82,7 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            
+
             <local:SelectedEditableItem DataContext="{Binding SelectedItem}" />
         </Grid>
     </Grid>

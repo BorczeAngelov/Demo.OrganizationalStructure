@@ -41,9 +41,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     _selectedItem = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedJobRole));
+                    OnPropertyChanged(nameof(SelectedEmployee));
                 }
             }
         }
+
+        public JobRoleVM SelectedJobRole { get => SelectedItem as JobRoleVM; set => SelectedItem = value; }
+        public EmployeeVM SelectedEmployee { get => SelectedItem as EmployeeVM; set => SelectedItem = value; }
 
         private void CreateNewJobRole(object obj)
         {
