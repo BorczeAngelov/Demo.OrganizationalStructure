@@ -30,6 +30,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             PropertyChanged += WhenAnyPropertyIsChangedMarkAsModified;
         }
 
+        public Type VmType { get => GetType(); }
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand DeleteCommand { get; }

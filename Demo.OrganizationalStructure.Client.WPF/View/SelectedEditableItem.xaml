@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
+             xmlns:viewModel="clr-namespace:Demo.OrganizationalStructure.Client.WPF.ViewModel"
              mc:Ignorable="d"
              d:DesignWidth="400"
              d:DesignHeight="450">
@@ -32,10 +33,37 @@
         </DockPanel>
 
         <Grid Grid.Row="1">
-            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Width="100" />
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type ContentControl}"
+                              x:Key="EditJobRoleTemplate">
+                    <local:EditJobRole />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type ContentControl}"
+                              x:Key="EditEmployeeTemplate">
+                    <local:EditEmployee />
+                </DataTemplate>
+            </Grid.Resources>
+
+            <ContentControl Content="{Binding }">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>                            
+                            <DataTrigger Binding="{Binding VmType}"
+                                         Value="{x:Type viewModel:JobRoleVM}">
+                                <Setter Property="ContentTemplate"
+                                        Value="{StaticResource EditJobRoleTemplate}" />
+                            </DataTrigger>
+                            
+                            <DataTrigger Binding="{Binding VmType}"
+                                         Value="{x:Type viewModel:EmployeeVM}">
+                                <Setter Property="ContentTemplate"
+                                        Value="{StaticResource EditEmployeeTemplate}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
         </Grid>
         
         <DockPanel Grid.Row="2"
