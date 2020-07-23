@@ -2,6 +2,7 @@
 using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             _twoWayComm.JobRoleDeleted += RemoveLocalJob;
             _twoWayComm.EmployeeDeleted += RemoveLocalEmployee;
+
+            _twoWayComm.LoadStartingValues += OnLoadStartingValues;
         }
 
         public DelegateCommand AddJobRoleCommand { get; }
@@ -111,6 +114,20 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     SelectedItem = null;
                 }
+            }
+        }
+        private void OnLoadStartingValues(
+            IEnumerable<JobRole> jobRoles,
+            IEnumerable<Employee> employees)
+        {
+            foreach (var jobRole in jobRoles)
+            {
+                AddNewJobRoleFromServer(jobRole);
+            }
+
+            foreach (var employee in employees)
+            {
+                AddNewEmployeeFromServer(employee);
             }
         }
 

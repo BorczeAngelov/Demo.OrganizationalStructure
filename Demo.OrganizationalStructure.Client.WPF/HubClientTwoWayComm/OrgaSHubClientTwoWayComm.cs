@@ -3,6 +3,7 @@ using Demo.OrganizationalStructure.Common.HubInterfaces;
 using Demo.OrganizationalStructure.Common.Utils;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
@@ -18,6 +19,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public event Action<Employee> EmployeeCreated;
         public event Action<Employee> EmployeeUpdated;
         public event Action<Employee> EmployeeDeleted;
+        public event Action<IEnumerable<JobRole>, IEnumerable<Employee>> LoadStartingValues;
 
         internal OrgaSHubClientTwoWayComm()
         {
@@ -33,6 +35,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             _serverConnection.On<Employee>(nameof(InvokeCreateEmployee), InvokeCreateEmployee);
             _serverConnection.On<Employee>(nameof(InvokeUpdateEmployee), InvokeUpdateEmployee);
             _serverConnection.On<Employee>(nameof(InvokeDeleteEmployee), InvokeDeleteEmployee);
+            _serverConnection.On<IEnumerable<JobRole>, IEnumerable<Employee>>(nameof(InvokeLoadStartingValues), InvokeLoadStartingValues);
 
             ServerHubProxy = new ServerHubProxyImp(_serverConnection);
         }
@@ -78,6 +81,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public void InvokeDeleteEmployee(Employee employee)
         {
             EmployeeDeleted?.Invoke(employee);
+        }
+
+        public void InvokeLoadStartingValues(IEnumerable<JobRole> jobRoles, IEnumerable<Employee> employees)
+        {
+            LoadStartingValues?.Invoke(jobRoles, employees);
         }
 
         #region private class ServerHubProxyImp

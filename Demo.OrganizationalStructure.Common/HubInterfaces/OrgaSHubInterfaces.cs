@@ -1,5 +1,7 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Demo.OrganizationalStructure.Common.HubInterfaces
@@ -20,6 +22,8 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
     {
         void InvokePongDemo();
 
+        void InvokeLoadStartingValues(IEnumerable<JobRole> jobRoles, IEnumerable<Employee> employees);
+
         void InvokeCreateJobRole(JobRole jobRole);
         void InvokeUpdateJobRole(JobRole jobRole);
         void InvokeDeleteJobRole(JobRole jobRole);
@@ -31,6 +35,8 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
     public interface IOrgaSHubClientTwoWayComm : IOrgaSHubClient
     {
         event Action PongedDemo;
+
+        event Action<IEnumerable<JobRole>, IEnumerable<Employee>> LoadStartingValues;
 
         event Action<JobRole> JobRoleCreated;
         event Action<JobRole> JobRoleUpdated;
