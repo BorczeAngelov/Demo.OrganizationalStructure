@@ -32,12 +32,17 @@
 
                 <Button Content="Connect"
                         Command="{Binding ConnectCommand}"
+                        Padding="5,0"/>
+
+                <Button Content="Local Export"
+                        Command="{Binding OrganizationalStructureVM.ExportCommand}"
                         Padding="5,0"
                         Margin="5,0" />
 
-                <Button Content="Local Export"
-                        Command="{Binding OrganizationalStructureVM.ExportCommand}" />
-                
+                <Button Content="Local Import"
+                        Command="{Binding OrganizationalStructureVM.ImportCommand}" 
+                        Padding="5,0"/>
+
             </StackPanel>
         </Border>
 

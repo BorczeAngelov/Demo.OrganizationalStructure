@@ -15,6 +15,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     {
         private readonly IOrgaSHubClientTwoWayComm _twoWayComm;
         private readonly Organisation _organisationDataModel;
+
         private EditableItemBaseVM _selectedItem;
         private ImportExportImp _importExportImp;
 
@@ -28,6 +29,15 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             SimpleHierarchyVM = new SimpleHierarchyVM(this);
 
             ExportCommand = new DelegateCommand(arg => _importExportImp.Export(_organisationDataModel));
+            ImportCommand = new DelegateCommand(
+                arg =>
+                    {
+                        var organisation = _importExportImp.Import();
+                        if (organisation != null)
+                        {
+                            ImportNewOrganisation(organisation);
+                        }
+                    });
 
             AddJobRoleCommand = new DelegateCommand(CreateNewJobRole);
             AddEmployeeCommand = new DelegateCommand(CreateNewEmployee);
@@ -43,6 +53,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         }
 
         public SimpleHierarchyVM SimpleHierarchyVM { get; }
+        public DelegateCommand ImportCommand { get; }
         public DelegateCommand ExportCommand { get; }
 
 
@@ -143,18 +154,52 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             }
         }
 
-        private void OnLoadStartingValues(Organisation organisation)
+        private void OnLoadStartingValues(Organisation newOrganisation)
         {
-            _organisationDataModel.Name = organisation.Name;
+            _organisationDataModel.Name = newOrganisation.Name;
 
-            foreach (var jobRole in organisation.JobRoles)
+            foreach (var jobRole in newOrganisation.JobRoles)
             {
                 AddNewJobRoleFromServer(jobRole);
             }
 
-            foreach (var employee in organisation.Employees)
+            foreach (var employee in newOrganisation.Employees)
             {
                 AddNewEmployeeFromServer(employee);
+            }
+        }
+
+
+        private void ImportNewOrganisation(Organisation newOrganisation)
+        {
+            ClearExistingData();
+            _organisationDataModel.Name = newOrganisation.Name;
+
+            foreach (var jobRole in newOrganisation.JobRoles)
+            {
+                var newJobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles, isNewAndUnsaved: true);
+                JobRoles.Add(newJobRoleVM);
+                newJobRoleVM.SaveCommand.Execute(null);
+            }
+
+            foreach (var employee in newOrganisation.Employees)
+            {
+                var newEmployeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles, isNewAndUnsaved: true);
+                Employees.Add(newEmployeeVM);
+                newEmployeeVM.SaveCommand.Execute(null);
+            }
+        }
+
+        private void ClearExistingData()
+        {
+            foreach (var jobRole in JobRoles)
+            {
+                jobRole.DeleteCommand.Execute(null);
+            }
+
+            foreach (var employee in Employees)
+            {
+                employee.DeleteCommand.Execute(null);
             }
         }
     }
