@@ -1,6 +1,67 @@
 {
     "Name": "Demo organisation",
     "EntityKey": "00000000-0000-0000-0000-000000000000",
-    "JobRoles": [],
-    "Employees": []
+    "JobRoles": [
+        {
+            "EntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266",
+            "Name": "Marketing",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
+        },
+        {
+            "EntityKey": "e5df79ac-fcf0-4928-9d90-c49506399f23",
+            "Name": "CEO",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+            "EntityKey": "94e81dee-0f1f-40b5-9893-1b710437091f",
+            "Name": "Sales",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
+        },
+        {
+            "EntityKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497",
+            "Name": "Production",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
+        }
+    ],
+    "Employees": [
+        {
+            "EntityKey": "c02b5aba-5de2-424a-a826-ac3e8e32c799",
+            "Name": "Nell Bryan",
+            "JobRoleEntityKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
+        },
+        {
+            "EntityKey": "720af153-a962-4a9f-b967-c305c774705e",
+            "Name": "Rupert Martin",
+            "JobRoleEntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266"
+        },
+        {
+            "EntityKey": "c3410f72-6254-4857-b843-a6e49b4eb821",
+            "Name": "Francesca Bird",
+            "JobRoleEntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266"
+        },
+        {
+            "EntityKey": "4b692056-842f-4ca9-a777-4d6fcc001f2a",
+            "Name": "Andrew Strong",
+            "JobRoleEntityKey": "94e81dee-0f1f-40b5-9893-1b710437091f"
+        },
+        {
+            "EntityKey": "fa428fb3-5185-4f89-b895-da2998b0b6c6",
+            "Name": "Ester Fisher",
+            "JobRoleEntityKey": "94e81dee-0f1f-40b5-9893-1b710437091f"
+        },
+        {
+            "EntityKey": "087293b9-f3d3-4b01-91d3-0b325b09d2d2",
+            "Name": "Abby Chase",
+            "JobRoleEntityKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
+        },
+        {
+            "EntityKey": "45cf2cea-445c-48fb-b7da-68d679db0a15",
+            "Name": "Lon Gilbert",
+            "JobRoleEntityKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
+        }
+    ]
 }
