@@ -1,4 +1,5 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.Utils;
+﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy;
+using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
@@ -17,11 +18,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         internal OrganizationalStructureVM(IOrgaSHubClientTwoWayComm twoWayComm)
         {
-            _twoWayComm = twoWayComm;
+            SimpleHierarchyVM = new SimpleHierarchyVM(this);
 
             AddJobRoleCommand = new DelegateCommand(CreateNewJobRole);
             AddEmployeeCommand = new DelegateCommand(CreateNewEmployee);
 
+            _twoWayComm = twoWayComm;
             _twoWayComm.JobRoleCreated += AddNewJobRoleFromServer;
             _twoWayComm.EmployeeCreated += AddNewEmployeeFromServer;
 
@@ -33,6 +35,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         public DelegateCommand AddJobRoleCommand { get; }
         public DelegateCommand AddEmployeeCommand { get; }
+        public SimpleHierarchyVM SimpleHierarchyVM { get; }
         public ObservableCollection<JobRoleVM> JobRoles { get; } = new ObservableCollection<JobRoleVM>();
         public ObservableCollection<EmployeeVM> Employees { get; } = new ObservableCollection<EmployeeVM>();
 
@@ -43,9 +46,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 if (_selectedItem != value)
                 {
-                    //if (!ShouldChangeSelectionHelper())
-                    //{ return; }
-
                     _selectedItem = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(SelectedJobRole));
@@ -131,43 +131,5 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 AddNewEmployeeFromServer(employee);
             }
         }
-
-        //private bool ShouldChangeSelectionHelper()
-        //{
-        //    var result = true;
-        //    if (_selectedItem?.IsNewAndUnsaved == true)
-        //    {
-        //        var answer = AskUserIfNewUnsavedDataEntryShouldBeDeleted();
-        //        result = answer == MessageBoxResult.Yes;
-        //        if (result)
-        //        {
-        //            if (SelectedItem is EmployeeVM employeeVM)
-        //            {
-        //                Employees.Remove(employeeVM);
-        //            }
-        //            else
-        //            {
-        //                JobRoles.Remove(SelectedJobRole);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            result = false;
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        //private MessageBoxResult AskUserIfNewUnsavedDataEntryShouldBeDeleted()
-        //{
-        //    const string Caption = "Unsaved new data entry";
-        //    const string MessageBoxText = "Your new data entry is not saved. If you select another element, the current data will be lost. Continue anyway?";
-        //    var answer = MessageBox.Show(
-        //        MessageBoxText,
-        //        Caption,
-        //        MessageBoxButton.YesNo,
-        //        MessageBoxImage.Question);
-        //    return answer;
-        //}
     }
 }

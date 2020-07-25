@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Demo.OrganizationalStructure.Client.WPF.View"
              xmlns:viewModel="clr-namespace:Demo.OrganizationalStructure.Client.WPF.ViewModel"
+             xmlns:simpleHierarchy="clr-namespace:Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy"
              mc:Ignorable="d"
              d:DesignWidth="1000"
              d:DesignHeight="450">
@@ -12,6 +13,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"
                               MinWidth="400" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*"
                               MinWidth="400" />
@@ -98,7 +101,16 @@
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch" />
 
-        <Grid Grid.Column="2">
+        <simpleHierarchy:SimpleHierarchyView DataContext="{Binding SimpleHierarchyVM}"
+                                             Grid.Column="2" />
+
+        <GridSplitter Grid.Column="3"
+                      ResizeDirection="Columns"
+                      ResizeBehavior="PreviousAndNext"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch" />
+
+        <Grid Grid.Column="4">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Style.Triggers>

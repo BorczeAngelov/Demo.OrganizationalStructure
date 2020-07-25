@@ -1,6 +1,8 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.ViewModel;
-using System;
-using System.Collections.Specialized;
+﻿
+using Demo.OrganizationalStructure.Client.WPF.ViewModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
 {
@@ -12,39 +14,57 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
         {
             _organizationalStructureVM = organizationalStructureVM;
 
-            _organizationalStructureVM.JobRoles.CollectionChanged += SyncWithJobRoles;
-            _organizationalStructureVM.Employees.CollectionChanged += SyncWithEmployees;
+            _organizationalStructureVM.JobRoles.CollectionChanged += (s, e) => RecreateHirarchy();
+            _organizationalStructureVM.Employees.CollectionChanged += (s, e) => RecreateHirarchy();
         }
 
-        private void SyncWithJobRoles(object sender, NotifyCollectionChangedEventArgs e)
+        public ObservableCollection<ICompositeItem> HirarchyItems { get; } = new ObservableCollection<ICompositeItem>();
+
+        // Note: Simple, but resources intensiv solution        
+        private void RecreateHirarchy()
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                foreach (var item in e.NewItems)
-                {
-                    var jobRoleVM = (JobRoleVM)item;
-                    var compositeJobRoleVM = new CompositeJobRoleVM(jobRoleVM);
+            HirarchyItems.Clear();
 
-                    //1: Search upwards & Inject itself                    
-                    //2: Observe when UpperHierarchy changes, and update it self
-                }
+            var composites = _organizationalStructureVM.JobRoles.Select(
+                x =>
+                {
+                    var item = new CompositeJobRoleVM(x);
+                    item.HierarchicalChange += () => RecreateHirarchy();
+                    return item;
+                }).ToList();
+
+            var compositeLeafs = _organizationalStructureVM.Employees.Select(
+                x =>
+                {
+                    var item = new CompositeLeafEmployeeVM(x);
+                    item.HierarchicalChange += () => RecreateHirarchy();
+                    return item;
+                }).ToList();
+
+            foreach (var compositeItem in composites)
+            {
+                AddItemToHirarchy(compositeItem, composites);
             }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    var jobRoleVM = (JobRoleVM)item;
-                    //var compositeJobRoleVM = new CompositeJobRoleVM(jobRoleVM);
 
-                    //TODO: Search composite & remove itself                    
-                }
+            foreach (var compositeItem in compositeLeafs)
+            {
+                AddItemToHirarchy(compositeItem, composites);
             }
         }
 
-
-        private void SyncWithEmployees(object sender, NotifyCollectionChangedEventArgs e)
+        private void AddItemToHirarchy(
+            ICompositeItem compositeItem,
+            IEnumerable<IComposite> composites)
         {
-            throw new NotImplementedException();
+            var parentComposite = composites.FirstOrDefault(x => x.Key == compositeItem.ParentKey);
+            if (parentComposite != null)
+            {
+                parentComposite.CompositeItems.Add(compositeItem);
+            }
+            else
+            {
+                HirarchyItems.Add(compositeItem);
+            }
         }
     }
 }
