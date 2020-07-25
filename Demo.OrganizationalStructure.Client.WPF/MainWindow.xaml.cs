@@ -14,12 +14,19 @@ namespace Demo.OrganizationalStructure.Client.WPF
             DataContext = _mainWindowVM;
 
             _mainWindowVM.ShowMessageBox += ShowMessageBox;
+
+            Loaded += AutomaticConnect;
         }
 
         private void ShowMessageBox(string message, string caption)
         {
             Activate();
             MessageBox.Show(this, message, caption);
+        }
+
+        private void AutomaticConnect(object sender, RoutedEventArgs e)
+        {
+            _mainWindowVM.ConnectCommand.Execute(null);
         }
     }
 }

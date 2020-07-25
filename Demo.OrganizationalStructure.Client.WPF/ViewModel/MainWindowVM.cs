@@ -41,7 +41,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         }
 
         private async void Connect(object obj)
-        {
+        {            
             try
             {
                 await _orgaSHubClientTwoWayComm.ConnectWithServerHub();
