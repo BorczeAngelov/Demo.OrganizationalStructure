@@ -64,6 +64,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 if (_upperHierarchyJobRole != value)
                 {
+                    ValidateNewUpperHierarchyValue(value);
+
                     _upperHierarchyJobRole = value;
                     OnPropertyChanged();
                 }
@@ -114,6 +116,38 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _dataModel.Name = Name;
             _dataModel.Description = Description;
             _dataModel.UpperHierarchyJobRoleKey = (UpperHierarchyJobRole != null) ? UpperHierarchyJobRole.EntityKey : Guid.Empty;
+        }
+
+        private void ValidateNewUpperHierarchyValue(JobRoleVM value)
+        {
+            if (value == this)
+            {
+                throw new ArgumentException("Cannot set itself as upper hierarchy.");
+            }
+
+            var isRootFound = SearchForRoot(value);
+            if (!isRootFound)
+            {
+                throw new ArgumentException("Hierarchy cannot be set.");
+            }
+        }
+
+        private bool SearchForRoot(JobRoleVM value)
+        {
+            var isRootFound = value.UpperHierarchyJobRole is null;
+            if (!isRootFound)
+            {
+                var stackOverflow = value.UpperHierarchyJobRole == this;
+                if (!stackOverflow)
+                {
+                    return SearchForRoot(value.UpperHierarchyJobRole);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return isRootFound;
         }
     }
 }
