@@ -1,6 +1,8 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -9,13 +11,17 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private JobRole _dataModel;
         private string _name;
         private string _description;
+        private JobRoleVM _upperHierarchyJobRole;
 
         internal JobRoleVM(
             IOrgaSHubClientTwoWayComm twoWayComm,
             JobRole dataModel,
+            ObservableCollection<JobRoleVM> existingJobRoleVMs,
             bool isNewAndUnsaved = false)
                 : base(twoWayComm, isNewAndUnsaved)
         {
+            ExistingJobRoleVMs = existingJobRoleVMs;
+
             _dataModel = dataModel;
             CopyDataFromModel();
 
@@ -45,6 +51,20 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 if (_description != value)
                 {
                     _description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<JobRoleVM> ExistingJobRoleVMs { get; }
+        public JobRoleVM UpperHierarchyJobRole
+        {
+            get => _upperHierarchyJobRole;
+            set
+            {
+                if (_upperHierarchyJobRole != value)
+                {
+                    _upperHierarchyJobRole = value;
                     OnPropertyChanged();
                 }
             }
@@ -86,12 +106,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             Name = _dataModel.Name;
             Description = _dataModel.Description;
+            UpperHierarchyJobRole = ExistingJobRoleVMs.FirstOrDefault(x => x.EntityKey == _dataModel.UpperHierarchyJobRoleKey);
         }
 
         private void CopyDataToModel()
         {
             _dataModel.Name = Name;
             _dataModel.Description = Description;
+            _dataModel.UpperHierarchyJobRoleKey = (UpperHierarchyJobRole != null) ? UpperHierarchyJobRole.EntityKey : Guid.Empty;
         }
     }
 }

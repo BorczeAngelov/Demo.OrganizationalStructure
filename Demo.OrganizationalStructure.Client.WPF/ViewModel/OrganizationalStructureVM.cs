@@ -60,7 +60,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private void CreateNewJobRole(object obj)
         {
             var dataModel = new JobRole() { Name = "New job role", EntityKey = Guid.NewGuid() };
-            var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, isNewAndUnsaved: true);
+            var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
             JobRoles.Add(jobRoleVM);
 
             SelectedItem = jobRoleVM;
@@ -79,7 +79,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             Debug.Assert(!JobRoles.Any(x => x.EntityKey == jobRole.EntityKey));
 
-            var jobRoleVM = new JobRoleVM(_twoWayComm, jobRole);
+            var jobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles);
             JobRoles.Add(jobRoleVM);
         }
 
