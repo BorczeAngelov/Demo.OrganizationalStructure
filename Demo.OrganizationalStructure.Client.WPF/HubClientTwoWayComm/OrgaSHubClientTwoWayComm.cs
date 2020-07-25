@@ -1,6 +1,5 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
-using Demo.OrganizationalStructure.Common.Utils;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -20,10 +19,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public event Action<Employee> EmployeeDeleted;
         public event Action<IEnumerable<JobRole>, IEnumerable<Employee>> LoadStartingValues;
 
-        internal OrgaSHubClientTwoWayComm()
+        internal OrgaSHubClientTwoWayComm(string serverHubUrl)
         {
             _serverConnection = new HubConnectionBuilder()
-                .WithUrl(DemoUrlConstants.LocalHostUrl + DemoUrlConstants.OrgaSHubEndpoint)
+                .WithUrl(serverHubUrl)
                 .WithAutomaticReconnect()
                 .Build();
 

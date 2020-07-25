@@ -1,5 +1,6 @@
 ﻿using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
 using Demo.OrganizationalStructure.Client.WPF.Utils;
+using Demo.OrganizationalStructure.Common.Utils;
 using System;
 using System.ComponentModel;
 
@@ -17,7 +18,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         internal MainWindowVM()
         {
-            _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm();
+            var serverHubUrl = DemoUrlConstants.LocalHostUrl + DemoUrlConstants.OrgaSHubEndpoint;
+            _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm(serverHubUrl);
+
             OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm);
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
