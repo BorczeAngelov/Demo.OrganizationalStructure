@@ -68,7 +68,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void CreateNewEmployee(object obj)
         {
-            var startingName = "Employee" + (Employees.Count + 1);
+            var startingName = "Employee " + (Employees.Count + 1);
             var dataModel = new Employee() { Name = startingName, EntityKey = Guid.NewGuid() };
             var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
             Employees.Add(employeeVM);

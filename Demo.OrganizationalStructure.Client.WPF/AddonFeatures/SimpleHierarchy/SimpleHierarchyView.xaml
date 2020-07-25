@@ -13,15 +13,15 @@
                 <HierarchicalDataTemplate  DataType="{x:Type local:CompositeJobRoleVM}"
                                            ItemsSource="{Binding CompositeItems}">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Job role:" />
                         <TextBlock Text="{Binding JobRoleVM.Name}"
+                                   Foreground="Red"
+                                   FontWeight="Bold"
                                    Margin="2,0,0,0" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
                 <DataTemplate DataType="{x:Type local:CompositeLeafEmployeeVM}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Employee name:" />
+                    <StackPanel Orientation="Horizontal">                        
                         <TextBlock Text="{Binding EmployeeVM.Name}"
                                    Margin="2,0,0,0" />
                     </StackPanel>

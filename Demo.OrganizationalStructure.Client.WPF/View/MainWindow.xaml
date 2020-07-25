@@ -16,9 +16,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid IsEnabled="{Binding IsConnected}">
-            <local:OrganizationalStructure DataContext="{Binding OrganizationalStructureVM}" />
-        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto">
+            <Grid IsEnabled="{Binding IsConnected}">
+                <local:OrganizationalStructure DataContext="{Binding OrganizationalStructureVM}" />
+            </Grid>
+        </ScrollViewer>
 
         <Border Grid.Row="1"
                 BorderThickness="0,2,0,0"

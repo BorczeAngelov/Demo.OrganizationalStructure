@@ -40,12 +40,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
                     return item;
                 }).ToList();
 
-            foreach (var compositeItem in composites)
+
+            foreach (var compositeItem in compositeLeafs)
             {
                 AddItemToHirarchy(compositeItem, composites);
             }
 
-            foreach (var compositeItem in compositeLeafs)
+            foreach (var compositeItem in composites)
             {
                 AddItemToHirarchy(compositeItem, composites);
             }
