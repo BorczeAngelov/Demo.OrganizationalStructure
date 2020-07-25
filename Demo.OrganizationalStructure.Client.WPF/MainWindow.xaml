@@ -31,11 +31,6 @@
                 <Button Content="Connect"
                         Command="{Binding ConnectCommand}"
                         Padding="5,0" />
-
-                <Button Content="(Demo) Ping server"
-                        Command="{Binding PingServerCommand}"
-                        Margin="5,0,0,0"
-                        Padding="5,0" />
             </StackPanel>
         </Border>
 

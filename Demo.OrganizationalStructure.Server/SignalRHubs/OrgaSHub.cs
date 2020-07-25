@@ -8,11 +8,6 @@ namespace Demo.OrganizationalStructure.Server.SignalRHubs
 {
     internal class OrgaSHub : Hub, IOrgaSHub
     {
-        public async Task PingDemo()
-        {
-            await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokePongDemo));
-        }
-
         public override Task OnConnectedAsync()
         {
             var jobRoles = OrgaSHubSharedMemorySingleton.GetInstance.GetJobRoles;

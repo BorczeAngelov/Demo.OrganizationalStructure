@@ -8,8 +8,6 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 {
     public interface IOrgaSHub
     {
-        Task PingDemo();
-
         Task CreateJobRole(JobRole jobRole);
         Task UpdateJobRole(JobRole jobRole);
         Task DeleteJobRole(JobRole jobRole);
@@ -20,8 +18,6 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 
     public interface IOrgaSHubClient
     {
-        void InvokePongDemo();
-
         void InvokeLoadStartingValues(IEnumerable<JobRole> jobRoles, IEnumerable<Employee> employees);
 
         void InvokeCreateJobRole(JobRole jobRole);
@@ -34,8 +30,6 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 
     public interface IOrgaSHubClientTwoWayComm : IOrgaSHubClient
     {
-        event Action PongedDemo;
-
         event Action<IEnumerable<JobRole>, IEnumerable<Employee>> LoadStartingValues;
 
         event Action<JobRole> JobRoleCreated;

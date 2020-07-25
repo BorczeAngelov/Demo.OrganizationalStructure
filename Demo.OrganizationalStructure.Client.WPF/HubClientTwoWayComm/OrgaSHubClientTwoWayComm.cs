@@ -12,7 +12,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
     {
         private readonly HubConnection _serverConnection;
 
-        public event Action PongedDemo;
         public event Action<JobRole> JobRoleCreated;
         public event Action<JobRole> JobRoleUpdated;
         public event Action<JobRole> JobRoleDeleted;
@@ -28,7 +27,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
                 .WithAutomaticReconnect()
                 .Build();
 
-            _serverConnection.On(nameof(InvokePongDemo), InvokePongDemo);
             _serverConnection.On<JobRole>(nameof(InvokeCreateJobRole), InvokeCreateJobRole);
             _serverConnection.On<JobRole>(nameof(InvokeUpdateJobRole), InvokeUpdateJobRole);
             _serverConnection.On<JobRole>(nameof(InvokeDeleteJobRole), InvokeDeleteJobRole);
@@ -45,11 +43,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public async Task ConnectWithServerHub()
         {
             await _serverConnection.StartAsync();
-        }
-
-        public void InvokePongDemo()
-        {
-            PongedDemo?.Invoke();
         }
 
         public void InvokeCreateJobRole(JobRole jobRole)
@@ -96,11 +89,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             internal ServerHubProxyImp(HubConnection serverConnection)
             {
                 _serverConnection = serverConnection;
-            }
-
-            public Task PingDemo()
-            {
-                return _serverConnection.InvokeAsync(nameof(PingDemo));
             }
 
             public Task UpdateJobRole(JobRole jobRole)

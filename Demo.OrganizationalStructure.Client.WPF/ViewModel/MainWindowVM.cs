@@ -21,14 +21,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm);
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
-            PingServerCommand = new DelegateCommand(PingServer, arg => IsConnected);
 
             PropertyChanged += RefreshCommandsWhenIsConnectedChanges;
-            _orgaSHubClientTwoWayComm.PongedDemo += ResponeToPongFromServer;
         }
 
         public DelegateCommand ConnectCommand { get; }
-        public DelegateCommand PingServerCommand { get; }
 
         public bool IsConnected
         {
@@ -56,22 +53,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             }
         }
 
-        private async void PingServer(object obj)
-        {
-            await _orgaSHubClientTwoWayComm.ServerHubProxy.PingDemo();
-        }
-
-        private void ResponeToPongFromServer()
-        {
-            ShowMessageBox?.Invoke("Pong", "Message from server");
-        }
-
         private void RefreshCommandsWhenIsConnectedChanges(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IsConnected))
             {
                 ConnectCommand.RaiseCanExecuteChanged();
-                PingServerCommand.RaiseCanExecuteChanged();
             }
         }
     }
