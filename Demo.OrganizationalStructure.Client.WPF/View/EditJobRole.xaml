@@ -23,6 +23,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Name:"
@@ -54,5 +56,39 @@
                   IsSynchronizedWithCurrentItem="True"
                   Grid.Row="4"
                   Grid.Column="2" />
+
+        <TextBlock Text="Error message:"
+                   Foreground="Red"
+                   Grid.Row="6"
+                   Grid.Column="0">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ErrorMessageOfUpperHierarchyJobRole}"
+                                     Value="{x:Null}">
+                            <Setter Property="Visibility"
+                                    Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <TextBlock Text="{Binding ErrorMessageOfUpperHierarchyJobRole}"
+                   Foreground="Red"
+                   Grid.Row="6"
+                   Grid.Column="2">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ErrorMessageOfUpperHierarchyJobRole}"
+                                     Value="{x:Null}">
+                            <Setter Property="Visibility"
+                                    Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </UserControl>

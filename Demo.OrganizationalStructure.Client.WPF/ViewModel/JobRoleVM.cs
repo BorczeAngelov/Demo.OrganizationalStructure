@@ -12,6 +12,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         private string _name;
         private string _description;
         private JobRoleVM _upperHierarchyJobRole;
+        private string _exceptionOfUpperHierarchyJobRole;
 
         internal JobRoleVM(
             IOrgaSHubClientTwoWayComm twoWayComm,
@@ -64,9 +65,27 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 if (_upperHierarchyJobRole != value)
                 {
-                    ValidateNewUpperHierarchyValue(value);
+                    if (!ValidateNewUpperHierarchyValue(value, out Exception exception))
+                    {
+                        ErrorMessageOfUpperHierarchyJobRole = exception.Message;
+                        throw exception;
+                    }
+                    ErrorMessageOfUpperHierarchyJobRole = null;
 
                     _upperHierarchyJobRole = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ErrorMessageOfUpperHierarchyJobRole
+        {
+            get => _exceptionOfUpperHierarchyJobRole;
+            private set
+            {
+                if (_exceptionOfUpperHierarchyJobRole != value)
+                {
+                    _exceptionOfUpperHierarchyJobRole = value;
                     OnPropertyChanged();
                 }
             }
@@ -118,18 +137,25 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _dataModel.UpperHierarchyJobRoleKey = (UpperHierarchyJobRole != null) ? UpperHierarchyJobRole.EntityKey : Guid.Empty;
         }
 
-        private void ValidateNewUpperHierarchyValue(JobRoleVM value)
+        private bool ValidateNewUpperHierarchyValue(
+            JobRoleVM value,
+            out Exception exception)
         {
             if (value == this)
             {
-                throw new ArgumentException("Cannot set itself as upper hierarchy.");
+                exception = new ArgumentException("Cannot set itself as upper hierarchy.");
+                return false;
             }
 
             var isRootFound = SearchForRoot(value);
             if (!isRootFound)
             {
-                throw new ArgumentException("Hierarchy cannot be set.");
+                exception = new ArgumentException("Hierarchy cannot be set.");
+                return false;
             }
+
+            exception = null;
+            return true;
         }
 
         private bool SearchForRoot(JobRoleVM value)
