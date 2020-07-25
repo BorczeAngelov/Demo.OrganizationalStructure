@@ -24,8 +24,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm);
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
-
-            PropertyChanged += RefreshCommandsWhenIsConnectedChanges;
         }
 
         public DelegateCommand ConnectCommand { get; }
@@ -49,18 +47,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 await _orgaSHubClientTwoWayComm.ConnectWithServerHub();
                 IsConnected = true;
+                ConnectCommand.RaiseCanExecuteChanged();
             }
             catch (Exception ex)
             {
                 ShowMessageBox?.Invoke(ex.Message, "Error");
-            }
-        }
-
-        private void RefreshCommandsWhenIsConnectedChanges(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IsConnected))
-            {
-                ConnectCommand.RaiseCanExecuteChanged();
             }
         }
     }
