@@ -1,8 +1,10 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy;
+﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport;
+using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy;
 using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -12,12 +14,20 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     public class OrganizationalStructureVM : ObservableBase
     {
         private readonly IOrgaSHubClientTwoWayComm _twoWayComm;
+        private readonly Organisation _organisationDataModel;
         private EditableItemBaseVM _selectedItem;
-        private Organisation _organisationDataModel;
+        private ImportExportImp _importExportImp;
 
-        internal OrganizationalStructureVM(IOrgaSHubClientTwoWayComm twoWayComm)
+        internal OrganizationalStructureVM(
+            IOrgaSHubClientTwoWayComm twoWayComm,
+             ImportExportImp importExportImp)
         {
+            _importExportImp = importExportImp;
+            _organisationDataModel = new Organisation() { JobRoles = new List<JobRole>(), Employees = new List<Employee>() };
+
             SimpleHierarchyVM = new SimpleHierarchyVM(this);
+
+            ExportCommand = new DelegateCommand(arg => _importExportImp.Export(_organisationDataModel));
 
             AddJobRoleCommand = new DelegateCommand(CreateNewJobRole);
             AddEmployeeCommand = new DelegateCommand(CreateNewEmployee);
@@ -32,9 +42,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _twoWayComm.LoadStartingValues += OnLoadStartingValues;
         }
 
+        public SimpleHierarchyVM SimpleHierarchyVM { get; }
+        public DelegateCommand ExportCommand { get; }
+
+
         public DelegateCommand AddJobRoleCommand { get; }
         public DelegateCommand AddEmployeeCommand { get; }
-        public SimpleHierarchyVM SimpleHierarchyVM { get; }
         public ObservableCollection<JobRoleVM> JobRoles { get; } = new ObservableCollection<JobRoleVM>();
         public ObservableCollection<EmployeeVM> Employees { get; } = new ObservableCollection<EmployeeVM>();
 
@@ -64,6 +77,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             JobRoles.Add(jobRoleVM);
 
             SelectedItem = jobRoleVM;
+
+            _organisationDataModel.JobRoles.Add(dataModel);
         }
 
         private void CreateNewEmployee(object obj)
@@ -74,27 +89,33 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             Employees.Add(employeeVM);
 
             SelectedItem = employeeVM;
+
+            _organisationDataModel.Employees.Add(dataModel);
         }
 
-        private void AddNewJobRoleFromServer(JobRole jobRole)
+        private void AddNewJobRoleFromServer(JobRole dataModel)
         {
-            Debug.Assert(!JobRoles.Any(x => x.EntityKey == jobRole.EntityKey));
+            Debug.Assert(!JobRoles.Any(x => x.EntityKey == dataModel.EntityKey));
 
-            var jobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles);
+            var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles);
             JobRoles.Add(jobRoleVM);
+
+            _organisationDataModel.JobRoles.Add(dataModel);
         }
 
-        private void AddNewEmployeeFromServer(Employee employee)
+        private void AddNewEmployeeFromServer(Employee dataModel)
         {
-            Debug.Assert(!Employees.Any(x => x.EntityKey == employee.EntityKey));
+            Debug.Assert(!Employees.Any(x => x.EntityKey == dataModel.EntityKey));
 
-            var employeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles);
+            var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles);
             Employees.Add(employeeVM);
+
+            _organisationDataModel.Employees.Add(dataModel);
         }
 
-        private void RemoveLocalJob(JobRole jobRole)
+        private void RemoveLocalJob(JobRole dataModel)
         {
-            var localJobRoleVM = JobRoles.FirstOrDefault(x => x.EntityKey == jobRole.EntityKey);
+            var localJobRoleVM = JobRoles.FirstOrDefault(x => x.EntityKey == dataModel.EntityKey);
             if (localJobRoleVM != null)
             {
                 JobRoles.Remove(localJobRoleVM);
@@ -102,12 +123,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     SelectedItem = null;
                 }
+
+                _organisationDataModel.JobRoles.Remove(dataModel);
             }
         }
 
-        private void RemoveLocalEmployee(Employee employee)
+        private void RemoveLocalEmployee(Employee dataModel)
         {
-            var localEmployeeVM = Employees.FirstOrDefault(x => x.EntityKey == employee.EntityKey);
+            var localEmployeeVM = Employees.FirstOrDefault(x => x.EntityKey == dataModel.EntityKey);
             if (localEmployeeVM != null)
             {
                 Employees.Remove(localEmployeeVM);
@@ -115,12 +138,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     SelectedItem = null;
                 }
+
+                _organisationDataModel.Employees.Remove(dataModel);
             }
         }
 
         private void OnLoadStartingValues(Organisation organisation)
         {
-            _organisationDataModel = organisation;
+            _organisationDataModel.Name = organisation.Name;
 
             foreach (var jobRole in organisation.JobRoles)
             {

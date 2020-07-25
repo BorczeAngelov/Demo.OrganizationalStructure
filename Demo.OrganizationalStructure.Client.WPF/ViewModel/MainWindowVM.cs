@@ -1,4 +1,5 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
+﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport;
+using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
 using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.Utils;
 using System;
@@ -15,12 +16,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         public event Action<string, string> ShowMessageBox;
 
-        internal MainWindowVM()
+        internal MainWindowVM(ImportExportImp importExportImp)
         {
             var serverHubUrl = DemoUrlConstants.LocalHostUrl + DemoUrlConstants.OrgaSHubEndpoint;
             _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm(serverHubUrl);
 
-            OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm);
+            OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm, importExportImp);
 
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
         }

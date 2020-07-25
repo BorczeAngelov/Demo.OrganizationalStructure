@@ -1,4 +1,5 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.ViewModel;
+﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport;
+using Demo.OrganizationalStructure.Client.WPF.ViewModel;
 using System.Windows;
 
 namespace Demo.OrganizationalStructure.Client.WPF.View
@@ -10,7 +11,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.View
         public MainWindow()
         {
             InitializeComponent();
-            _mainWindowVM = new MainWindowVM();
+
+            var importExportImp = new ImportExportImp(this);
+            _mainWindowVM = new MainWindowVM(importExportImp);
             DataContext = _mainWindowVM;
 
             _mainWindowVM.ShowMessageBox += ShowMessageBox;
