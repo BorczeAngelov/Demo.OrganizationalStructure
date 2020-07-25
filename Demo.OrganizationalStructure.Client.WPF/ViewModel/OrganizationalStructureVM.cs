@@ -116,6 +116,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 }
             }
         }
+
         private void OnLoadStartingValues(
             IEnumerable<JobRole> jobRoles,
             IEnumerable<Employee> employees)
