@@ -1,7 +1,7 @@
 ﻿using Demo.OrganizationalStructure.Client.WPF.ViewModel;
 using System.Windows;
 
-namespace Demo.OrganizationalStructure.Client.WPF
+namespace Demo.OrganizationalStructure.Client.WPF.View
 {
     public partial class MainWindow : Window
     {
