@@ -1,4 +1,5 @@
 ﻿using Demo.OrganizationalStructure.Common.DataModel;
+using Demo.OrganizationalStructure.Server.StartingData;
 using System.Collections.Generic;
 
 namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
@@ -15,11 +16,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
 
         private OrgaSHubSharedMemorySingleton()
         {
-            _organisation = new Organisation
-            {
-                JobRoles = new List<JobRole>(),
-                Employees = new List<Employee>()
-            };
+            _organisation = StartingDataProvider.GetOrganisation();
         }
 
         internal static OrgaSHubSharedMemorySingleton GetInstance
