@@ -9,8 +9,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
 
         Guid Key { get; }
         Guid ParentKey { get; }
-
-        Type Type { get; } 
     }
 
 

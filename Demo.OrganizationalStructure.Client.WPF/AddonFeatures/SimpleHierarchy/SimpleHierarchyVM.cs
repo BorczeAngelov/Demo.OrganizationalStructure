@@ -1,5 +1,4 @@
-﻿
-using Demo.OrganizationalStructure.Client.WPF.ViewModel;
+﻿using Demo.OrganizationalStructure.Client.WPF.ViewModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -62,7 +61,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
                 parentComposite.CompositeItems.Add(compositeItem);
             }
             else
-            {
+            {//Note: no parent has been found - meaning it belongs to root level
                 HirarchyItems.Add(compositeItem);
             }
         }

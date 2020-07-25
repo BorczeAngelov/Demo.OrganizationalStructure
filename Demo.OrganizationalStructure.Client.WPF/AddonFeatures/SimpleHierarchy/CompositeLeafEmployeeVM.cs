@@ -16,7 +16,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
 
         public EmployeeVM EmployeeVM { get; }
 
-        public Type Type { get => GetType(); }
         public Guid Key { get => EmployeeVM.EntityKey; }
         public Guid ParentKey { get => (EmployeeVM.JobRole != null) ? EmployeeVM.JobRole.EntityKey : Guid.Empty; }
 

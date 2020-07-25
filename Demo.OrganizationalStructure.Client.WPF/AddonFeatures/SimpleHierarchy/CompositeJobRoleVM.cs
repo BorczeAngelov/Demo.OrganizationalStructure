@@ -18,7 +18,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
         public JobRoleVM JobRoleVM { get; }
         public ObservableCollection<ICompositeItem> CompositeItems { get; } = new ObservableCollection<ICompositeItem>();
 
-        public Type Type { get => GetType(); }
         public Guid Key { get => JobRoleVM.EntityKey; }
         public Guid ParentKey { get => (JobRoleVM.UpperHierarchyJobRole != null) ? JobRoleVM.UpperHierarchyJobRole.EntityKey : Guid.Empty; }
 
