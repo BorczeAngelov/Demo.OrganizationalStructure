@@ -3,11 +3,9 @@ using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -15,6 +13,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     {
         private readonly IOrgaSHubClientTwoWayComm _twoWayComm;
         private EditableItemBaseVM _selectedItem;
+        private Organisation _organisationDataModel;
 
         internal OrganizationalStructureVM(IOrgaSHubClientTwoWayComm twoWayComm)
         {
@@ -117,16 +116,16 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             }
         }
 
-        private void OnLoadStartingValues(
-            IEnumerable<JobRole> jobRoles,
-            IEnumerable<Employee> employees)
+        private void OnLoadStartingValues(Organisation organisation)
         {
-            foreach (var jobRole in jobRoles)
+            _organisationDataModel = organisation;
+
+            foreach (var jobRole in organisation.JobRoles)
             {
                 AddNewJobRoleFromServer(jobRole);
             }
 
-            foreach (var employee in employees)
+            foreach (var employee in organisation.Employees)
             {
                 AddNewEmployeeFromServer(employee);
             }

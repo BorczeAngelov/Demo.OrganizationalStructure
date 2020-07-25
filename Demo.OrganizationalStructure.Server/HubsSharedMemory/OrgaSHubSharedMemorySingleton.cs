@@ -8,16 +8,18 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         private static OrgaSHubSharedMemorySingleton _instance;
         private static readonly object _instanceSyncLock = new object();
 
-        private List<JobRole> _jobRoles;
+        private Organisation _organisation;
+        private readonly object _organisationSyncLock = new object();
         private readonly object _jobRolesSyncLock = new object();
-
-        private List<Employee> _employees;
         private readonly object _employeesSyncLock = new object();
 
         private OrgaSHubSharedMemorySingleton()
         {
-            _jobRoles = new List<JobRole>();
-            _employees = new List<Employee>();
+            _organisation = new Organisation
+            {
+                JobRoles = new List<JobRole>(),
+                Employees = new List<Employee>()
+            };
         }
 
         internal static OrgaSHubSharedMemorySingleton GetInstance
@@ -38,13 +40,13 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
             }
         }
 
-        internal IEnumerable<JobRole> GetJobRoles
+        internal Organisation GetOrganisation
         {
             get
             {
-                lock (_jobRolesSyncLock)
+                lock (_organisationSyncLock)
                 {
-                    return _jobRoles;
+                    return _organisation;
                 }
             }
         }
@@ -53,7 +55,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_jobRolesSyncLock)
             {
-                _jobRoles.Add(jobRole);
+                _organisation.JobRoles.Add(jobRole);
             }
         }
 
@@ -61,7 +63,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_jobRolesSyncLock)
             {
-                var existingJobRole = _jobRoles.Find(x => x.EntityKey == jobRole.EntityKey);
+                var existingJobRole = _organisation.JobRoles.Find(x => x.EntityKey == jobRole.EntityKey);
                 if (existingJobRole != null)
                 {
                     existingJobRole.Name = jobRole.Name;
@@ -74,22 +76,10 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_jobRolesSyncLock)
             {
-                var existingJobRole = _jobRoles.Find(x => x.EntityKey == jobRole.EntityKey);
+                var existingJobRole = _organisation.JobRoles.Find(x => x.EntityKey == jobRole.EntityKey);
                 if (existingJobRole != null)
                 {
-                    _jobRoles.Remove(existingJobRole);
-                }
-            }
-        }
-
-
-        internal IEnumerable<Employee> GetEmployees
-        {
-            get
-            {
-                lock (_employeesSyncLock)
-                {
-                    return _employees;
+                    _organisation.JobRoles.Remove(existingJobRole);
                 }
             }
         }
@@ -98,7 +88,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_employeesSyncLock)
             {
-                _employees.Add(employee);
+                _organisation.Employees.Add(employee);
             }
         }
 
@@ -106,7 +96,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_employeesSyncLock)
             {
-                var existingEmployee = _employees.Find(x => x.EntityKey == employee.EntityKey);
+                var existingEmployee = _organisation.Employees.Find(x => x.EntityKey == employee.EntityKey);
                 if (existingEmployee != null)
                 {
                     existingEmployee.Name = employee.Name;
@@ -119,10 +109,10 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
         {
             lock (_employeesSyncLock)
             {
-                var existingEmployee = _employees.Find(x => x.EntityKey == employee.EntityKey);
+                var existingEmployee = _organisation.Employees.Find(x => x.EntityKey == employee.EntityKey);
                 if (existingEmployee != null)
                 {
-                    _employees.Remove(existingEmployee);
+                    _organisation.Employees.Remove(existingEmployee);
                 }
             }
         }
