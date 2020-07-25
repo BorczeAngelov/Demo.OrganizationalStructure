@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
 {
@@ -46,38 +47,38 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
 
         public void InvokeCreateJobRole(JobRole jobRole)
         {
-            JobRoleCreated?.Invoke(jobRole);
+            Dispatcher.CurrentDispatcher.Invoke(() => JobRoleCreated?.Invoke(jobRole));
         }
 
         public void InvokeUpdateJobRole(JobRole jobRole)
         {
-            JobRoleUpdated?.Invoke(jobRole);
+            Dispatcher.CurrentDispatcher.Invoke(() => JobRoleUpdated?.Invoke(jobRole));
         }
 
         public void InvokeDeleteJobRole(JobRole jobRole)
         {
-            JobRoleDeleted?.Invoke(jobRole);
+            Dispatcher.CurrentDispatcher.Invoke(() => JobRoleDeleted?.Invoke(jobRole));
         }
 
 
         public void InvokeCreateEmployee(Employee employee)
         {
-            EmployeeCreated?.Invoke(employee);
+            Dispatcher.CurrentDispatcher.Invoke(() => EmployeeCreated?.Invoke(employee));
         }
 
         public void InvokeUpdateEmployee(Employee employee)
         {
-            EmployeeUpdated?.Invoke(employee);
+            Dispatcher.CurrentDispatcher.Invoke(() => EmployeeUpdated?.Invoke(employee));
         }
 
         public void InvokeDeleteEmployee(Employee employee)
         {
-            EmployeeDeleted?.Invoke(employee);
+            Dispatcher.CurrentDispatcher.Invoke(() => EmployeeDeleted?.Invoke(employee));
         }
 
         public void InvokeLoadStartingValues(IEnumerable<JobRole> jobRoles, IEnumerable<Employee> employees)
         {
-            LoadStartingValues?.Invoke(jobRoles, employees);
+            Dispatcher.CurrentDispatcher.Invoke(() => LoadStartingValues?.Invoke(jobRoles, employees));
         }
 
         #region private class ServerHubProxyImp
