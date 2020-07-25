@@ -58,7 +58,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void CreateNewJobRole(object obj)
         {
-            var dataModel = new JobRole() { Name = "New job role", EntityKey = Guid.NewGuid() };
+            var startingName = "Job role " + (JobRoles.Count + 1);
+            var dataModel = new JobRole() { Name = startingName, EntityKey = Guid.NewGuid() };
             var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
             JobRoles.Add(jobRoleVM);
 
@@ -67,7 +68,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void CreateNewEmployee(object obj)
         {
-            var dataModel = new Employee() { Name = "New employee", EntityKey = Guid.NewGuid() };
+            var startingName = "Employee" + (Employees.Count + 1);
+            var dataModel = new Employee() { Name = startingName, EntityKey = Guid.NewGuid() };
             var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
             Employees.Add(employeeVM);
 
