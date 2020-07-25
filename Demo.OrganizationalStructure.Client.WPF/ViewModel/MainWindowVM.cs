@@ -2,7 +2,6 @@
 using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.Utils;
 using System;
-using System.ComponentModel;
 
 namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 {
@@ -10,7 +9,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     {
         private readonly OrgaSHubClientTwoWayComm _orgaSHubClientTwoWayComm;
 
-        public OrganizationalStructureVM OrganizationalStructureVM { get; private set; }
+        public OrganizationalStructureVM OrganizationalStructureVM { get; }
 
         private bool _isConnected;
 
@@ -42,7 +41,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         }
 
         private async void Connect(object obj)
-        {            
+        {
             try
             {
                 await _orgaSHubClientTwoWayComm.ConnectWithServerHub();

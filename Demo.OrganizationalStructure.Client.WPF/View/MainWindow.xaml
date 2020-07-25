@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Organizational Structure WPF Client"
         Height="450"
-        Width="1050"
-        MinHeight="300"
-        MinWidth="800">
+        Width="1300"
+        MinHeight="450"
+        MinWidth="1300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
