@@ -7,33 +7,33 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="300">
-    <DockPanel>
-        <TreeView ItemsSource="{Binding HirarchyItems}">
-            <TreeView.Resources>
-                <HierarchicalDataTemplate  DataType="{x:Type local:CompositeJobRoleVM}"
-                                           ItemsSource="{Binding CompositeItems}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding JobRoleVM.Name}"
-                                   Foreground="Red"
-                                   FontWeight="Bold"
-                                   Margin="2,0,0,0" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>
+    <TreeView x:Name="TreeViewControl"
+              ItemsSource="{Binding HirarchyItems}"
+              SelectedItemChanged="SelectItemInVM">
+        <TreeView.Resources>
+            <HierarchicalDataTemplate  DataType="{x:Type local:CompositeJobRoleVM}"
+                                       ItemsSource="{Binding CompositeItems}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding JobRoleVM.Name}"
+                               Foreground="Red"
+                               FontWeight="Bold"
+                               Margin="2,0,0,0" />
+                </StackPanel>
+            </HierarchicalDataTemplate>
 
-                <DataTemplate DataType="{x:Type local:CompositeLeafEmployeeVM}">
-                    <StackPanel Orientation="Horizontal">                        
-                        <TextBlock Text="{Binding EmployeeVM.Name}"
-                                   Margin="2,0,0,0" />
-                    </StackPanel>
-                </DataTemplate>
-            </TreeView.Resources>
+            <DataTemplate DataType="{x:Type local:CompositeLeafEmployeeVM}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding EmployeeVM.Name}"
+                               Margin="2,0,0,0" />
+                </StackPanel>
+            </DataTemplate>
+        </TreeView.Resources>
 
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded"
-                            Value="True" />
-                </Style>
-            </TreeView.ItemContainerStyle>
-        </TreeView>
-    </DockPanel>
+        <TreeView.ItemContainerStyle>
+            <Style TargetType="TreeViewItem">
+                <Setter Property="IsExpanded"
+                        Value="True" />
+            </Style>
+        </TreeView.ItemContainerStyle>
+    </TreeView>
 </UserControl>
