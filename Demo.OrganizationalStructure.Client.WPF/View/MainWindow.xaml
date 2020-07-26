@@ -32,7 +32,7 @@
 
                 <Button Content="Connect"
                         Command="{Binding ConnectCommand}"
-                        Padding="5,0"/>
+                        Padding="5,0" />
 
                 <Button Content="Local Export"
                         Command="{Binding OrganizationalStructureVM.ExportCommand}"
@@ -40,8 +40,26 @@
                         Margin="5,0" />
 
                 <Button Content="Local Import"
-                        Command="{Binding OrganizationalStructureVM.ImportCommand}" 
-                        Padding="5,0"/>
+                        Command="{Binding OrganizationalStructureVM.ImportCommand}"
+                        Padding="5,0" />
+
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,0">
+
+                    <TextBlock Text="Upload to server mode:"
+                               VerticalAlignment="Center" />
+
+                    <CheckBox Content="Live"
+                              IsChecked="{Binding ChangesLiveUploadVM.ShouldDoLiveUploads}"
+                              VerticalAlignment="Center"
+                              Margin="5,0" />
+
+                    <CheckBox Content="Transaction (Save button)"
+                              IsChecked="{Binding ChangesLiveUploadVM.ShouldDoTransactionUploads}"
+                              VerticalAlignment="Center"
+                              Margin="5,0" />
+                </StackPanel>
 
             </StackPanel>
         </Border>

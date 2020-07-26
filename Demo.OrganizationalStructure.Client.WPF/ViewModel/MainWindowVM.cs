@@ -1,4 +1,5 @@
-﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport;
+﻿using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ChangesLiveUpload;
+using Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport;
 using Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm;
 using Demo.OrganizationalStructure.Client.WPF.Utils;
 using Demo.OrganizationalStructure.Common.Utils;
@@ -10,11 +11,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     {
         private readonly OrgaSHubClientTwoWayComm _orgaSHubClientTwoWayComm;
 
-        public OrganizationalStructureVM OrganizationalStructureVM { get; }
+        public event Action<string, string> ShowMessageBox;
 
         private bool _isConnected;
-
-        public event Action<string, string> ShowMessageBox;
 
         internal MainWindowVM(ImportExportImp importExportImp)
         {
@@ -22,11 +21,15 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _orgaSHubClientTwoWayComm = new OrgaSHubClientTwoWayComm(serverHubUrl);
 
             OrganizationalStructureVM = new OrganizationalStructureVM(_orgaSHubClientTwoWayComm, importExportImp);
-
+            ChangesLiveUploadVM = new ChangesLiveUploadVM(OrganizationalStructureVM);
             ConnectCommand = new DelegateCommand(Connect, arg => !IsConnected);
+
+            ChangesLiveUploadVM.ShouldDoLiveUploads = true;
         }
 
         public DelegateCommand ConnectCommand { get; }
+        public ChangesLiveUploadVM ChangesLiveUploadVM { get; }
+        public OrganizationalStructureVM OrganizationalStructureVM { get; }
 
         public bool IsConnected
         {
