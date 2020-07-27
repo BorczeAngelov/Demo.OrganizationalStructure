@@ -85,11 +85,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             var startingName = "Job role " + (JobRoles.Count + 1);
             var dataModel = new JobRole() { Name = startingName, EntityKey = Guid.NewGuid() };
             var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles, isNew: true);
+
+            var startingUpperHierarchyJobRole = SelectedJobRole;
+            jobRoleVM.UpperHierarchyJobRole = startingUpperHierarchyJobRole;
+
             JobRoles.Add(jobRoleVM);
+            _organisationDataModel.JobRoles.Add(dataModel);
 
             SelectedItem = jobRoleVM;
-
-            _organisationDataModel.JobRoles.Add(dataModel);
         }
 
         private void CreateNewEmployee(object obj)
@@ -97,11 +100,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             var startingName = "Employee " + (Employees.Count + 1);
             var dataModel = new Employee() { Name = startingName, EntityKey = Guid.NewGuid() };
             var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNew: true);
+
+            var startingJobRole = SelectedJobRole ?? SelectedEmployee?.JobRole;
+            employeeVM.JobRole = startingJobRole;
+
             Employees.Add(employeeVM);
+            _organisationDataModel.Employees.Add(dataModel);
 
             SelectedItem = employeeVM;
-
-            _organisationDataModel.Employees.Add(dataModel);
         }
 
         private void AddNewJobRoleFromServer(JobRole dataModel)
