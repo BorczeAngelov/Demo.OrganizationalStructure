@@ -18,8 +18,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             IOrgaSHubClientTwoWayComm twoWayComm,
             JobRole dataModel,
             ObservableCollection<JobRoleVM> existingJobRoleVMs,
-            bool isNewAndUnsaved = false)
-                : base(twoWayComm, isNewAndUnsaved)
+            bool isNew = false)
+                : base(twoWayComm, isNew)
         {
             ExistingJobRoleVMs = existingJobRoleVMs;
 

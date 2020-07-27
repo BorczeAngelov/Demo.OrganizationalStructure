@@ -54,7 +54,7 @@
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsNewAndUnsaved}"
+                                        <DataTrigger Binding="{Binding IsNew}"
                                                      Value="True">
                                             <Setter Property="Foreground"
                                                     Value="DarkOrange" />
@@ -79,7 +79,7 @@
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsNewAndUnsaved}"
+                                        <DataTrigger Binding="{Binding IsNew}"
                                                      Value="True">
                                             <Setter Property="Foreground"
                                                     Value="DarkOrange" />

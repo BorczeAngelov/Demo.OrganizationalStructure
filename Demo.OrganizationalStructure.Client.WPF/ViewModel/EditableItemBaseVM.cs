@@ -8,7 +8,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
     public abstract class EditableItemBaseVM : ObservableBase
     {
         protected readonly IOrgaSHubClientTwoWayComm TwoWayComm;
-        private bool _isNewAndUnsaved;
+        private bool _isNew;
         private bool _isModified;
 
         protected abstract void Save();
@@ -18,13 +18,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         protected EditableItemBaseVM(
             IOrgaSHubClientTwoWayComm twoWayComm,
-            bool isNewAndUnsaved)
+            bool isNew)
         {
             TwoWayComm = twoWayComm;
-            IsNewAndUnsaved = isNewAndUnsaved;
+            IsNew = isNew;
 
-            SaveCommand = new DelegateCommand(Save, arg => IsNewAndUnsaved || IsModified);
-            CancelCommand = new DelegateCommand(Cancel, arg => !IsNewAndUnsaved && IsModified);
+            SaveCommand = new DelegateCommand(Save, arg => IsNew || IsModified);
+            CancelCommand = new DelegateCommand(Cancel, arg => !IsNew && IsModified);
             DeleteCommand = new DelegateCommand(Delete);
 
             PropertyChanged += WhenAnyPropertyIsChangedMarkAsModified;
@@ -35,14 +35,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand DeleteCommand { get; }
 
-        public bool IsNewAndUnsaved
+        public bool IsNew
         {
-            get => _isNewAndUnsaved;
+            get => _isNew;
             private set
             {
-                if (_isNewAndUnsaved != value)
+                if (_isNew != value)
                 {
-                    _isNewAndUnsaved = value;
+                    _isNew = value;
                     OnPropertyChanged();
                 }
             }
@@ -65,14 +65,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void Save(object obj)
         {
-            if (!IsNewAndUnsaved)
+            if (!IsNew)
             {
                 Save();
             }
             else
             {
                 SaveNew();
-                IsNewAndUnsaved = false;
+                IsNew = false;
             }
             IsModified = false;
         }

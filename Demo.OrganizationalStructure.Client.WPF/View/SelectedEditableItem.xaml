@@ -26,14 +26,14 @@
                        DockPanel.Dock="Left" />
 
             <CheckBox Content="Is new"
-                      IsChecked="{Binding IsNewAndUnsaved, Mode=OneWay}"
+                      IsChecked="{Binding IsNew, Mode=OneWay}"
                       IsEnabled="False"
                       DockPanel.Dock="Right"
                       Margin="0,0,5,0">
                 <CheckBox.Style>
                     <Style TargetType="CheckBox">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsNewAndUnsaved}"
+                            <DataTrigger Binding="{Binding IsNew}"
                                          Value="True">
                                 <Setter Property="Foreground"
                                         Value="DarkOrange" />

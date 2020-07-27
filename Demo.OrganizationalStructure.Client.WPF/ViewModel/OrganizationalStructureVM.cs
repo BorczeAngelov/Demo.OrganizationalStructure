@@ -84,7 +84,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             var startingName = "Job role " + (JobRoles.Count + 1);
             var dataModel = new JobRole() { Name = startingName, EntityKey = Guid.NewGuid() };
-            var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
+            var jobRoleVM = new JobRoleVM(_twoWayComm, dataModel, JobRoles, isNew: true);
             JobRoles.Add(jobRoleVM);
 
             SelectedItem = jobRoleVM;
@@ -96,7 +96,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             var startingName = "Employee " + (Employees.Count + 1);
             var dataModel = new Employee() { Name = startingName, EntityKey = Guid.NewGuid() };
-            var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNewAndUnsaved: true);
+            var employeeVM = new EmployeeVM(_twoWayComm, dataModel, JobRoles, isNew: true);
             Employees.Add(employeeVM);
 
             SelectedItem = employeeVM;
@@ -177,14 +177,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             foreach (var jobRole in newOrganisation.JobRoles)
             {
-                var newJobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles, isNewAndUnsaved: true);
+                var newJobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles, isNew: true);
                 JobRoles.Add(newJobRoleVM);
                 newJobRoleVM.SaveCommand.Execute(null);
             }
 
             foreach (var employee in newOrganisation.Employees)
             {
-                var newEmployeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles, isNewAndUnsaved: true);
+                var newEmployeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles, isNew: true);
                 Employees.Add(newEmployeeVM);
                 newEmployeeVM.SaveCommand.Execute(null);
             }
