@@ -136,7 +136,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         internal void LoadUpperHierarchyJobRoleFromExistingVMs()
         {
+            IsLoadingDataFromModel = true;
             UpperHierarchyJobRole = ExistingJobRoleVMs.FirstOrDefault(x => x.EntityKey == _dataModel.UpperHierarchyJobRoleKey);
+            IsLoadingDataFromModel = false;
         }
 
         private void CopyDataToModel()
