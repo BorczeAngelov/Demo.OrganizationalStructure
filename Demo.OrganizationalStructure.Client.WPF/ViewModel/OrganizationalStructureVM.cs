@@ -39,13 +39,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             ImportCommand = new DelegateCommand(
                 arg =>
+                {
+                    var organisation = _importExportImp.Import();
+                    if (organisation != null)
                     {
-                        var organisation = _importExportImp.Import();
-                        if (organisation != null)
-                        {
-                            ImportNewOrganisation(organisation);
-                        }
-                    });
+                        ImportNewOrganisation(organisation);
+                    }
+                });
 
             AddJobRoleCommand = new DelegateCommand(CreateNewJobRole);
             AddEmployeeCommand = new DelegateCommand(CreateNewEmployee);
@@ -176,6 +176,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 AddNewJobRoleFromServer(jobRole);
             }
+
+            foreach (var item in JobRoles)
+            {
+                item.LoadUpperHierarchyJobRoleFromExistingVMs();
+            }
+
 
             foreach (var employee in newOrganisation.Employees)
             {

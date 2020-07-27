@@ -129,6 +129,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         {
             Name = _dataModel.Name;
             Description = _dataModel.Description;
+            LoadUpperHierarchyJobRoleFromExistingVMs();
+        }
+
+        internal void LoadUpperHierarchyJobRoleFromExistingVMs()
+        {
             UpperHierarchyJobRole = ExistingJobRoleVMs.FirstOrDefault(x => x.EntityKey == _dataModel.UpperHierarchyJobRoleKey);
         }
 
