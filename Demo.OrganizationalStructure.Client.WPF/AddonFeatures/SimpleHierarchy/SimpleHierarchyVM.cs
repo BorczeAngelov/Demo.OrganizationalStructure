@@ -10,8 +10,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
     public class SimpleHierarchyVM
     {
         private readonly OrganizationalStructureVM _organizationalStructureVM;
-        private List<CompositeJobRoleVM> _composites;
-        private List<CompositeLeafEmployeeVM> _compositeLeafs;
+        private List<CompositeJobRoleVM> _composites = new List<CompositeJobRoleVM>();
+        private List<CompositeLeafEmployeeVM> _compositeLeafs = new List<CompositeLeafEmployeeVM>();
 
         internal event Action<ICompositeItem> SelectedCompositeItemChanged;
 
@@ -56,17 +56,22 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
 
             HirarchyItems.Clear();
 
+
+            foreach (var item in _composites)
+            {
+                item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy;
+            }
+
+            foreach (var item in _compositeLeafs)
+            {
+                item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy;
+            }
+
             _composites = _organizationalStructureVM.JobRoles.Select(
                 x =>
                 {
                     var item = new CompositeJobRoleVM(x);
-                    item.HierarchicalChange += () =>
-                    {
-                        if (_composites.Contains(item))
-                        {
-                            RecreateHirarchy();
-                        }
-                    };
+                    item.HierarchicalChange += OnHierarchicalChangeRecreateHirarchy;
                     return item;
                 }).ToList();
 
@@ -74,13 +79,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
                 x =>
                 {
                     var item = new CompositeLeafEmployeeVM(x);
-                    item.HierarchicalChange += () =>
-                    {
-                        if (_compositeLeafs.Contains(item))
-                        {
-                            RecreateHirarchy();
-                        }
-                    };
+                    item.HierarchicalChange += OnHierarchicalChangeRecreateHirarchy;
                     return item;
                 }).ToList();
 
@@ -94,6 +93,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
             {
                 AddItemToHirarchy(compositeItem, _composites);
             }
+        }
+
+        private void OnHierarchicalChangeRecreateHirarchy()
+        {
+            RecreateHirarchy();
         }
 
         private void AddItemToHirarchy(
