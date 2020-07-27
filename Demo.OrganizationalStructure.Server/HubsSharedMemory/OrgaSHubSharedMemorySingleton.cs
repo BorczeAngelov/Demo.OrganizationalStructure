@@ -37,13 +37,20 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
             }
         }
 
-        internal Organisation GetOrganisation
+        internal Organisation Organisation
         {
             get
             {
                 lock (_organisationSyncLock)
                 {
                     return _organisation;
+                }
+            }
+            set
+            {
+                lock (_organisationSyncLock)
+                {                    
+                    _organisation = value;
                 }
             }
         }
@@ -65,6 +72,7 @@ namespace Demo.OrganizationalStructure.Server.HubsSharedMemory
                 {
                     existingJobRole.Name = jobRole.Name;
                     existingJobRole.Description = jobRole.Description;
+                    existingJobRole.UpperHierarchyJobRoleKey = jobRole.UpperHierarchyJobRoleKey;
                 }
             }
         }
