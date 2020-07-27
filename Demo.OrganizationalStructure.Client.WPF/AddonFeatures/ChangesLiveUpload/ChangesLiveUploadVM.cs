@@ -45,6 +45,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ChangesLiveUploa
                 foreach (EditableItemBaseVM item in e.NewItems)
                 {
                     item.PropertyChanged += WhenModifiedInvokeSave;
+                    if (ShouldDoLiveUploads && item.IsNew)
+                    {
+                        item.SaveCommand.Execute(null);
+                    }
                 }
             }
         }
