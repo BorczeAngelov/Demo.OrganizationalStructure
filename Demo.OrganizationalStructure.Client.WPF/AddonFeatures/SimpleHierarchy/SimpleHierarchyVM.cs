@@ -44,7 +44,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
             _organizationalStructureVM.SelectedItem = realSelectedItem;
         }
 
-        // Note: Simple, but resources intensiv solution        
+        /// Note: 
+        /// 1. Simple, but resources intensiv solution
+        /// 2. There is a bug, when multiple instances of WPF client exist and "Import" operation is performed...
         internal void RecreateHirarchy()
         {
             if (DoAutoRefresh == false)
