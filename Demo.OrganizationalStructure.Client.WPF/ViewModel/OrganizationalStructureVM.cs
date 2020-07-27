@@ -43,7 +43,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                     var organisation = _importExportImp.Import();
                     if (organisation != null)
                     {
-                        ImportNewOrganisation(organisation);
+                        _twoWayComm.ServerHubProxy.ImportOrganisation(organisation);
                     }
                 });
 
@@ -196,51 +196,6 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             IsLoadingNewOrganisation = false;
             SimpleHierarchyVM.RecreateHirarchy();
-        }
-
-
-        private void ImportNewOrganisation(Organisation newOrganisation)
-        {
-            throw new NotImplementedException();
-            IsLoadingNewOrganisation = true;
-            ClearExistingData();
-            _organisationDataModel.Name = newOrganisation.Name;
-            _organisationDataModel.Employees.Clear();
-            _organisationDataModel.JobRoles.Clear();
-
-            foreach (var jobRole in newOrganisation.JobRoles)
-            {
-                _organisationDataModel.JobRoles.Add(jobRole);
-
-                var newJobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles, isNew: true);
-                JobRoles.Add(newJobRoleVM);
-                newJobRoleVM.SaveCommand.Execute(null);
-            }
-
-            foreach (var employee in newOrganisation.Employees)
-            {
-                _organisationDataModel.Employees.Add(employee);
-
-                var newEmployeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles, isNew: true);
-                Employees.Add(newEmployeeVM);
-                newEmployeeVM.SaveCommand.Execute(null);
-            }
-
-            IsLoadingNewOrganisation = false;
-            SimpleHierarchyVM.RecreateHirarchy();
-        }
-
-        private void ClearExistingData()
-        {
-            foreach (var jobRole in JobRoles)
-            {
-                jobRole.DeleteCommand.Execute(null);
-            }
-
-            foreach (var employee in Employees)
-            {
-                employee.DeleteCommand.Execute(null);
-            }
         }
     }
 }

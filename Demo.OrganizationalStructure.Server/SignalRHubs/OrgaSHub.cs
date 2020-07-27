@@ -10,10 +10,17 @@ namespace Demo.OrganizationalStructure.Server.SignalRHubs
     {
         public override Task OnConnectedAsync()
         {
-            var organisation = OrgaSHubSharedMemorySingleton.GetInstance.GetOrganisation;            
+            var organisation = OrgaSHubSharedMemorySingleton.GetInstance.Organisation;
             Clients.Caller.SendAsync(nameof(IOrgaSHubClient.InvokeLoadOrganisation), organisation);
             return base.OnConnectedAsync();
         }
+
+        public async Task ImportOrganisation(Organisation organisation)
+        {
+            OrgaSHubSharedMemorySingleton.GetInstance.Organisation = organisation;
+            await Clients.All.SendAsync(nameof(IOrgaSHubClient.InvokeLoadOrganisation), organisation);
+        }
+
 
         public async Task CreateJobRole(JobRole jobRole)
         {

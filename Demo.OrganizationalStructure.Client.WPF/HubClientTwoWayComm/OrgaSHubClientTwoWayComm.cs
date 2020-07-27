@@ -90,6 +90,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
                 _serverConnection = serverConnection;
             }
 
+            public Task ImportOrganisation(Organisation organisation)
+            {
+                return _serverConnection.InvokeAsync(nameof(ImportOrganisation), organisation);
+            }
+
+
             public Task UpdateJobRole(JobRole jobRole)
             {
                 return _serverConnection.InvokeAsync(nameof(UpdateJobRole), jobRole);

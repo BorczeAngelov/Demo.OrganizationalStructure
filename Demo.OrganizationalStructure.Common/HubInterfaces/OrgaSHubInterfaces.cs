@@ -6,6 +6,8 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 {
     public interface IOrgaSHub
     {
+        Task ImportOrganisation(Organisation organisation);
+
         Task CreateJobRole(JobRole jobRole);
         Task UpdateJobRole(JobRole jobRole);
         Task DeleteJobRole(JobRole jobRole);
