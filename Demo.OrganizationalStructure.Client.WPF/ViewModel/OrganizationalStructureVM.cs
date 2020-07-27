@@ -173,11 +173,15 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 AddNewEmployeeFromServer(employee);
             }
+
+            SimpleHierarchyVM.DoAutoRefresh = true;
+            SimpleHierarchyVM.RecreateHirarchy();
         }
 
 
         private void ImportNewOrganisation(Organisation newOrganisation)
         {
+            SimpleHierarchyVM.DoAutoRefresh = false;
             ClearExistingData();
             _organisationDataModel.Name = newOrganisation.Name;
 
@@ -194,6 +198,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 Employees.Add(newEmployeeVM);
                 newEmployeeVM.SaveCommand.Execute(null);
             }
+
+            SimpleHierarchyVM.DoAutoRefresh = true;
+            SimpleHierarchyVM.RecreateHirarchy();
         }
 
         private void ClearExistingData()

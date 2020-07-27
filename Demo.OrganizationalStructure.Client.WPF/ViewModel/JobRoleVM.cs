@@ -160,7 +160,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private bool SearchForRoot(JobRoleVM value)
         {
-            var isRootFound = value.UpperHierarchyJobRole is null;
+            var isRootFound = value?.UpperHierarchyJobRole is null;
             if (!isRootFound)
             {
                 var stackOverflow = value.UpperHierarchyJobRole == this;

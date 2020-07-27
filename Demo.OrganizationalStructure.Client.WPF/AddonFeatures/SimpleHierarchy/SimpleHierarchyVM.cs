@@ -10,6 +10,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
     public class SimpleHierarchyVM
     {
         private readonly OrganizationalStructureVM _organizationalStructureVM;
+        private List<CompositeJobRoleVM> _composites;
+        private List<CompositeLeafEmployeeVM> _compositeLeafs;
 
         internal event Action<ICompositeItem> SelectedCompositeItemChanged;
 
@@ -23,6 +25,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
             _organizationalStructureVM.PropertyChanged += SyncWithSelectedItem;
         }
 
+        internal bool DoAutoRefresh { get; set; }
         public ObservableCollection<ICompositeItem> HirarchyItems { get; } = new ObservableCollection<ICompositeItem>();
 
         internal void SelectItem(ICompositeItem compositeItem)
@@ -42,35 +45,52 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
         }
 
         // Note: Simple, but resources intensiv solution        
-        private void RecreateHirarchy()
+        internal void RecreateHirarchy()
         {
+            if (DoAutoRefresh == false)
+            {
+                return;
+            }
+
             HirarchyItems.Clear();
 
-            var composites = _organizationalStructureVM.JobRoles.Select(
+            _composites = _organizationalStructureVM.JobRoles.Select(
                 x =>
                 {
                     var item = new CompositeJobRoleVM(x);
-                    item.HierarchicalChange += () => RecreateHirarchy();
+                    item.HierarchicalChange += () =>
+                    {
+                        if (_composites.Contains(item))
+                        {
+                            RecreateHirarchy();
+                        }
+                    };
                     return item;
                 }).ToList();
 
-            var compositeLeafs = _organizationalStructureVM.Employees.Select(
+            _compositeLeafs = _organizationalStructureVM.Employees.Select(
                 x =>
                 {
                     var item = new CompositeLeafEmployeeVM(x);
-                    item.HierarchicalChange += () => RecreateHirarchy();
+                    item.HierarchicalChange += () =>
+                    {
+                        if (_compositeLeafs.Contains(item))
+                        {
+                            RecreateHirarchy();
+                        }
+                    };
                     return item;
                 }).ToList();
 
 
-            foreach (var compositeItem in compositeLeafs)
+            foreach (var compositeItem in _compositeLeafs)
             {
-                AddItemToHirarchy(compositeItem, composites);
+                AddItemToHirarchy(compositeItem, _composites);
             }
 
-            foreach (var compositeItem in composites)
+            foreach (var compositeItem in _composites)
             {
-                AddItemToHirarchy(compositeItem, composites);
+                AddItemToHirarchy(compositeItem, _composites);
             }
         }
 
