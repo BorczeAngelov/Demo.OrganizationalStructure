@@ -60,13 +60,13 @@
             <ContentControl Content="{Binding }">
                 <ContentControl.Style>
                     <Style TargetType="ContentControl">
-                        <Style.Triggers>                            
+                        <Style.Triggers>
                             <DataTrigger Binding="{Binding VmType}"
                                          Value="{x:Type viewModel:JobRoleVM}">
                                 <Setter Property="ContentTemplate"
                                         Value="{StaticResource EditJobRoleTemplate}" />
                             </DataTrigger>
-                            
+
                             <DataTrigger Binding="{Binding VmType}"
                                          Value="{x:Type viewModel:EmployeeVM}">
                                 <Setter Property="ContentTemplate"
@@ -77,7 +77,7 @@
                 </ContentControl.Style>
             </ContentControl>
         </Grid>
-        
+
         <DockPanel Grid.Row="2"
                    LastChildFill="False">
 

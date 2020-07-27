@@ -86,6 +86,14 @@
                                             <Setter Property="FontWeight"
                                                     Value="Bold" />
                                         </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsModified}"
+                                                     Value="True">
+                                            <Setter Property="Foreground"
+                                                    Value="Yellow" />
+                                            <Setter Property="FontWeight"
+                                                    Value="Bold" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
