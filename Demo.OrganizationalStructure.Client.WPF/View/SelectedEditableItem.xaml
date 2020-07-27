@@ -25,7 +25,7 @@
             <TextBlock Text="{Binding Name}"
                        DockPanel.Dock="Left" />
 
-            <CheckBox Content="Is new and unsaved"
+            <CheckBox Content="Is new"
                       IsChecked="{Binding IsNewAndUnsaved, Mode=OneWay}"
                       IsEnabled="False"
                       DockPanel.Dock="Right"
