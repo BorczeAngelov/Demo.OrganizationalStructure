@@ -57,7 +57,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _twoWayComm.JobRoleDeleted += RemoveLocalJob;
             _twoWayComm.EmployeeDeleted += RemoveLocalEmployee;
 
-            _twoWayComm.LoadOrganisation += OnLoadStartingValues;
+            _twoWayComm.LoadOrganisation += OnLoadOrganisation;
         }
 
         public SimpleHierarchyVM SimpleHierarchyVM { get; }
@@ -87,6 +87,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         public JobRoleVM SelectedJobRole { get => SelectedItem as JobRoleVM; set => SelectedItem = value; }
         public EmployeeVM SelectedEmployee { get => SelectedItem as EmployeeVM; set => SelectedItem = value; }
+        public bool IsLoadingNewOrganisation { get; internal set; }
 
         private void CreateNewJobRole(object obj)
         {
@@ -168,9 +169,15 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             }
         }
 
-        private void OnLoadStartingValues(Organisation newOrganisation)
+        private void OnLoadOrganisation(Organisation newOrganisation)
         {
+            IsLoadingNewOrganisation = true;
             _organisationDataModel.Name = newOrganisation.Name;
+
+            _organisationDataModel.JobRoles.Clear();
+            _organisationDataModel.Employees.Clear();
+            JobRoles.Clear();
+            Employees.Clear();
 
             foreach (var jobRole in newOrganisation.JobRoles)
             {
@@ -182,20 +189,20 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 item.LoadUpperHierarchyJobRoleFromExistingVMs();
             }
 
-
             foreach (var employee in newOrganisation.Employees)
             {
                 AddNewEmployeeFromServer(employee);
             }
 
-            SimpleHierarchyVM.DoAutoRefresh = true;
+            IsLoadingNewOrganisation = false;
             SimpleHierarchyVM.RecreateHirarchy();
         }
 
 
         private void ImportNewOrganisation(Organisation newOrganisation)
         {
-            SimpleHierarchyVM.DoAutoRefresh = false;
+            throw new NotImplementedException();
+            IsLoadingNewOrganisation = true;
             ClearExistingData();
             _organisationDataModel.Name = newOrganisation.Name;
             _organisationDataModel.Employees.Clear();
@@ -219,7 +226,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 newEmployeeVM.SaveCommand.Execute(null);
             }
 
-            SimpleHierarchyVM.DoAutoRefresh = true;
+            IsLoadingNewOrganisation = false;
             SimpleHierarchyVM.RecreateHirarchy();
         }
 

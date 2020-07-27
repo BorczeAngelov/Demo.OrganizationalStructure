@@ -25,7 +25,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
             _organizationalStructureVM.PropertyChanged += SyncWithSelectedItem;
         }
 
-        internal bool DoAutoRefresh { get; set; }
+        internal bool ShouldDoAutoRefresh { get => !_organizationalStructureVM.IsLoadingNewOrganisation; }
         public ObservableCollection<ICompositeItem> HirarchyItems { get; } = new ObservableCollection<ICompositeItem>();
 
         internal void SelectItem(ICompositeItem compositeItem)
@@ -49,7 +49,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
         /// 2. There is a bug, when multiple instances of WPF client exist and "Import" operation is performed...
         internal void RecreateHirarchy()
         {
-            if (DoAutoRefresh == false)
+            if (ShouldDoAutoRefresh == false)
             {
                 return;
             }

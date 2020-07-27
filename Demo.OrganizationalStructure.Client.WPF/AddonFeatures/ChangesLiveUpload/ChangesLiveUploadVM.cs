@@ -60,7 +60,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ChangesLiveUploa
 
         private void IfModifiedInvokeSave(EditableItemBaseVM editableItemBase)
         {
-            if (ShouldDoLiveUploads &&
+            if (!_organizationalStructureVM.IsLoadingNewOrganisation &&
+                ShouldDoLiveUploads &&
                 (editableItemBase.IsModified || editableItemBase.IsNew))
             {
                 editableItemBase.SaveCommand.Execute(null);
