@@ -28,7 +28,15 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             SimpleHierarchyVM = new SimpleHierarchyVM(this);
 
-            ExportCommand = new DelegateCommand(arg => _importExportImp.Export(_organisationDataModel));
+            ExportCommand = new DelegateCommand(
+                arg =>
+                {
+                    foreach (var item in JobRoles) { item.SaveCommand.Execute(null); }
+                    foreach (var item in Employees) { item.SaveCommand.Execute(null); }
+
+                    _importExportImp.Export(_organisationDataModel);
+                });
+
             ImportCommand = new DelegateCommand(
                 arg =>
                     {
@@ -184,9 +192,13 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             SimpleHierarchyVM.DoAutoRefresh = false;
             ClearExistingData();
             _organisationDataModel.Name = newOrganisation.Name;
+            _organisationDataModel.Employees.Clear();
+            _organisationDataModel.JobRoles.Clear();
 
             foreach (var jobRole in newOrganisation.JobRoles)
             {
+                _organisationDataModel.JobRoles.Add(jobRole);
+
                 var newJobRoleVM = new JobRoleVM(_twoWayComm, jobRole, JobRoles, isNew: true);
                 JobRoles.Add(newJobRoleVM);
                 newJobRoleVM.SaveCommand.Execute(null);
@@ -194,6 +206,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
             foreach (var employee in newOrganisation.Employees)
             {
+                _organisationDataModel.Employees.Add(employee);
+
                 var newEmployeeVM = new EmployeeVM(_twoWayComm, employee, JobRoles, isNew: true);
                 Employees.Add(newEmployeeVM);
                 newEmployeeVM.SaveCommand.Execute(null);

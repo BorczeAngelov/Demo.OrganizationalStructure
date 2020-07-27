@@ -84,7 +84,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             var isSameEntity = _dataModel.EntityKey == employeeFromServer.EntityKey;
             if (isSameEntity)
             {
-                _dataModel = employeeFromServer;
+                _dataModel.Name = employeeFromServer.Name;
+                _dataModel.JobRoleEntityKey = employeeFromServer.JobRoleEntityKey;
                 CopyDataFromModel();
             }
         }
