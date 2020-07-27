@@ -57,7 +57,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             _twoWayComm.JobRoleDeleted += RemoveLocalJob;
             _twoWayComm.EmployeeDeleted += RemoveLocalEmployee;
 
-            _twoWayComm.LoadStartingValues += OnLoadStartingValues;
+            _twoWayComm.LoadOrganisation += OnLoadStartingValues;
         }
 
         public SimpleHierarchyVM SimpleHierarchyVM { get; }

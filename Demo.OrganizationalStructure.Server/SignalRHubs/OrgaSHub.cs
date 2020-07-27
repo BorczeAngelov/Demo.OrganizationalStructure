@@ -11,7 +11,7 @@ namespace Demo.OrganizationalStructure.Server.SignalRHubs
         public override Task OnConnectedAsync()
         {
             var organisation = OrgaSHubSharedMemorySingleton.GetInstance.GetOrganisation;            
-            Clients.Caller.SendAsync(nameof(IOrgaSHubClient.InvokeLoadStartingValues), organisation);
+            Clients.Caller.SendAsync(nameof(IOrgaSHubClient.InvokeLoadOrganisation), organisation);
             return base.OnConnectedAsync();
         }
 

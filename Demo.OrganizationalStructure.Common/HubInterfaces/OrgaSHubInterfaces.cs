@@ -16,7 +16,7 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 
     public interface IOrgaSHubClient
     {
-        void InvokeLoadStartingValues(Organisation organisation);
+        void InvokeLoadOrganisation(Organisation organisation);
 
         void InvokeCreateJobRole(JobRole jobRole);
         void InvokeUpdateJobRole(JobRole jobRole);
@@ -28,7 +28,7 @@ namespace Demo.OrganizationalStructure.Common.HubInterfaces
 
     public interface IOrgaSHubClientTwoWayComm : IOrgaSHubClient
     {
-        event Action<Organisation> LoadStartingValues;
+        event Action<Organisation> LoadOrganisation;
 
         event Action<JobRole> JobRoleCreated;
         event Action<JobRole> JobRoleUpdated;

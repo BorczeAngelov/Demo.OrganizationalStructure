@@ -17,7 +17,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public event Action<Employee> EmployeeCreated;
         public event Action<Employee> EmployeeUpdated;
         public event Action<Employee> EmployeeDeleted;
-        public event Action<Organisation> LoadStartingValues;
+        public event Action<Organisation> LoadOrganisation;
 
         internal OrgaSHubClientTwoWayComm(string serverHubUrl)
         {
@@ -32,7 +32,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             _serverConnection.On<Employee>(nameof(InvokeCreateEmployee), InvokeCreateEmployee);
             _serverConnection.On<Employee>(nameof(InvokeUpdateEmployee), InvokeUpdateEmployee);
             _serverConnection.On<Employee>(nameof(InvokeDeleteEmployee), InvokeDeleteEmployee);
-            _serverConnection.On<Organisation>(nameof(InvokeLoadStartingValues), InvokeLoadStartingValues);
+            _serverConnection.On<Organisation>(nameof(InvokeLoadOrganisation), InvokeLoadOrganisation);
 
             ServerHubProxy = new ServerHubProxyImp(_serverConnection);
         }
@@ -75,9 +75,9 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
             Dispatcher.CurrentDispatcher.Invoke(() => EmployeeDeleted?.Invoke(employee));
         }
 
-        public void InvokeLoadStartingValues(Organisation organisation)
+        public void InvokeLoadOrganisation(Organisation organisation)
         {
-            Dispatcher.CurrentDispatcher.Invoke(() => LoadStartingValues?.Invoke(organisation));
+            Dispatcher.CurrentDispatcher.Invoke(() => LoadOrganisation?.Invoke(organisation));
         }
 
         #region private class ServerHubProxyImp
