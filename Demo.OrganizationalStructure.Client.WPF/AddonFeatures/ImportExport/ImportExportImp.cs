@@ -17,6 +17,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.ImportExport
 
         internal Organisation Import()
         {
+            MessageBox.Show(
+                "Because this is a demo app, the import operation works only when one instance of WPF client is running. " +
+                "Please do not perform import operation, if multiple instance of WPF client are simultaneously running.",
+                "Known bug: Local Import + RecreateHirarchy()");
+
             Organisation organisation = null;
 
             var openFileDialog = new OpenFileDialog();
