@@ -3,16 +3,16 @@
     "EntityKey": "00000000-0000-0000-0000-000000000000",
     "JobRoles": [
         {
-            "EntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266",
-            "Name": "Marketing",
-            "Description": null,
-            "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
-        },
-        {
             "EntityKey": "e5df79ac-fcf0-4928-9d90-c49506399f23",
             "Name": "CEO",
             "Description": null,
             "UpperHierarchyJobRoleKey": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+            "EntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266",
+            "Name": "Marketing",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
         },
         {
             "EntityKey": "94e81dee-0f1f-40b5-9893-1b710437091f",
