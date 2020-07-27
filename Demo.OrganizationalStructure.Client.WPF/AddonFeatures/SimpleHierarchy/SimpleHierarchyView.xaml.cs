@@ -15,8 +15,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _simpleHierarchyVM = (SimpleHierarchyVM)DataContext;
-            _simpleHierarchyVM.SelectedCompositeItemChanged += SelectItemFromVM;
+            _simpleHierarchyVM = DataContext as SimpleHierarchyVM;
+            if (_simpleHierarchyVM != null)
+            {
+                _simpleHierarchyVM.SelectedCompositeItemChanged += SelectItemFromVM;
+            }
         }
 
         private void SelectItemInVM(object sender, RoutedPropertyChangedEventArgs<object> e)
