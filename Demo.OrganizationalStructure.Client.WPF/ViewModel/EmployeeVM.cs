@@ -92,8 +92,10 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void CopyDataFromModel()
         {
+            IsLoadingDataFromModel = true;
             Name = _dataModel.Name;
             JobRole = ExistingJobRoleVMs.FirstOrDefault(x => x.EntityKey == _dataModel.JobRoleEntityKey);
+            IsLoadingDataFromModel = false;
         }
 
         private void CopyDataToModel()

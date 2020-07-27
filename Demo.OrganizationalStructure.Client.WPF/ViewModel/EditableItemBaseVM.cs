@@ -34,6 +34,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand DeleteCommand { get; }
+        protected bool IsLoadingDataFromModel { get; set; }
 
         public bool IsNew
         {
@@ -89,7 +90,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void WhenAnyPropertyIsChangedMarkAsModified(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(IsModified))
+            if (e.PropertyName != nameof(IsModified) &&
+                !IsLoadingDataFromModel)
             {
                 IsModified = true;
             }

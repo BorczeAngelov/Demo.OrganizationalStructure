@@ -127,9 +127,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void CopyDataFromModel()
         {
+            IsLoadingDataFromModel = true;
             Name = _dataModel.Name;
             Description = _dataModel.Description;
             LoadUpperHierarchyJobRoleFromExistingVMs();
+            IsLoadingDataFromModel = false;
         }
 
         internal void LoadUpperHierarchyJobRoleFromExistingVMs()
