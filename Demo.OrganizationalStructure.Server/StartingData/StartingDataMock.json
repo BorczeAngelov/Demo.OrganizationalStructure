@@ -25,6 +25,18 @@
             "Name": "Production",
             "Description": null,
             "UpperHierarchyJobRoleKey": "e5df79ac-fcf0-4928-9d90-c49506399f23"
+        },
+        {
+            "EntityKey": "81961a76-9a7b-471d-aef7-26b763879d96",
+            "Name": "Hardware",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
+        },
+        {
+            "EntityKey": "0798b4b2-66ea-4251-9776-85691cdb51ac",
+            "Name": "Software",
+            "Description": null,
+            "UpperHierarchyJobRoleKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
         }
     ],
     "Employees": [
@@ -56,12 +68,27 @@
         {
             "EntityKey": "087293b9-f3d3-4b01-91d3-0b325b09d2d2",
             "Name": "Abby Chase",
-            "JobRoleEntityKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
+            "JobRoleEntityKey": "0798b4b2-66ea-4251-9776-85691cdb51ac"
         },
         {
             "EntityKey": "45cf2cea-445c-48fb-b7da-68d679db0a15",
             "Name": "Lon Gilbert",
-            "JobRoleEntityKey": "5e760ed3-02d7-4f3a-b7c8-ad012d88b497"
+            "JobRoleEntityKey": "0798b4b2-66ea-4251-9776-85691cdb51ac"
+        },
+        {
+            "EntityKey": "ac408845-15c3-4bc5-a0ad-be16b38368eb",
+            "Name": "Employee 8",
+            "JobRoleEntityKey": "6914e551-cd9b-44b8-aa78-bb2193263266"
+        },
+        {
+            "EntityKey": "08286d07-2b01-4852-a6af-d993b9b1861e",
+            "Name": "Roscoe Leon",
+            "JobRoleEntityKey": "81961a76-9a7b-471d-aef7-26b763879d96"
+        },
+        {
+            "EntityKey": "4b96a851-3a2d-4190-b31c-8e366ae7e7fc",
+            "Name": "Warren Ryan",
+            "JobRoleEntityKey": "81961a76-9a7b-471d-aef7-26b763879d96"
         }
     ]
 }
