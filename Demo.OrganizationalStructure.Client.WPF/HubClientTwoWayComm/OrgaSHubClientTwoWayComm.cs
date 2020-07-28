@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
 {
-    internal class OrgaSHubClientTwoWayComm : IOrgaSHubClientTwoWayComm
+    public class OrgaSHubClientTwoWayComm : IOrgaSHubClientTwoWayComm
     {
         private readonly HubConnection _serverConnection;
 
@@ -19,7 +19,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.HubClientTwoWayComm
         public event Action<Employee> EmployeeDeleted;
         public event Action<Organisation> LoadOrganisation;
 
-        internal OrgaSHubClientTwoWayComm(string serverHubUrl)
+        public OrgaSHubClientTwoWayComm(string serverHubUrl)
         {
             _serverConnection = new HubConnectionBuilder()
                 .WithUrl(serverHubUrl)
