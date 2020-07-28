@@ -90,8 +90,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private void WhenAnyPropertyIsChangedMarkAsModified(object sender, PropertyChangedEventArgs e)
         {
+            var quickWorkaround = e.PropertyName != nameof(JobRoleVM.ErrorMessageOfUpperHierarchyJobRole); //Note: this should be refactored
+
             if (e.PropertyName != nameof(IsModified) &&
-                !IsLoadingDataFromModel)
+                !IsLoadingDataFromModel &&
+                quickWorkaround)
             {
                 IsModified = true;
             }
