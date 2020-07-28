@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Server", "Demo.OrganizationalStructure.Server\Demo.OrganizationalStructure.Server.csproj", "{631FF5DA-F97D-4658-BCF1-BC07165DEC63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructure.Server", "Demo.OrganizationalStructure.Server\Demo.OrganizationalStructure.Server.csproj", "{631FF5DA-F97D-4658-BCF1-BC07165DEC63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Client.WPF", "Demo.OrganizationalStructure.Client.WPF\Demo.OrganizationalStructure.Client.WPF.csproj", "{22527038-F1FA-402E-BB6D-C2635DEC29B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructure.Client.WPF", "Demo.OrganizationalStructure.Client.WPF\Demo.OrganizationalStructure.Client.WPF.csproj", "{22527038-F1FA-402E-BB6D-C2635DEC29B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Common", "Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj", "{2AA41170-70A1-4E37-98B0-53FCC597CE38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructure.Common", "Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj", "{2AA41170-70A1-4E37-98B0-53FCC597CE38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Client.MockDataGenerator", "Demo.OrganizationalStructure.Client.CreateMockData\Demo.OrganizationalStructure.Client.MockDataGenerator.csproj", "{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AA41170-70A1-4E37-98B0-53FCC597CE38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
