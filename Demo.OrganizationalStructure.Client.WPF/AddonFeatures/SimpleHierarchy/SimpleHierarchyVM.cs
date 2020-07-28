@@ -44,28 +44,14 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
             _organizationalStructureVM.SelectedItem = realSelectedItem;
         }
 
-        /// Note: 
-        /// 1. Simple, but resources intensiv solution
-        /// 2. There is a bug, when multiple instances of WPF client exist and "Import" operation is performed...
         internal void RecreateHirarchy()
         {
-            if (ShouldDoAutoRefresh == false)
-            {
-                return;
-            }
+            if (ShouldDoAutoRefresh == false) { return; }
 
             HirarchyItems.Clear();
 
-
-            foreach (var item in _composites)
-            {
-                item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy;
-            }
-
-            foreach (var item in _compositeLeafs)
-            {
-                item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy;
-            }
+            foreach (var item in _composites) { item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy; }
+            foreach (var item in _compositeLeafs) { item.HierarchicalChange -= OnHierarchicalChangeRecreateHirarchy; }
 
             _composites = _organizationalStructureVM.JobRoles.Select(
                 x =>
@@ -83,16 +69,8 @@ namespace Demo.OrganizationalStructure.Client.WPF.AddonFeatures.SimpleHierarchy
                     return item;
                 }).ToList();
 
-
-            foreach (var compositeItem in _compositeLeafs)
-            {
-                AddItemToHirarchy(compositeItem, _composites);
-            }
-
-            foreach (var compositeItem in _composites)
-            {
-                AddItemToHirarchy(compositeItem, _composites);
-            }
+            foreach (var compositeItem in _compositeLeafs) { AddItemToHirarchy(compositeItem, _composites); }
+            foreach (var compositeItem in _composites) { AddItemToHirarchy(compositeItem, _composites); }
         }
 
         private void OnHierarchicalChangeRecreateHirarchy()
