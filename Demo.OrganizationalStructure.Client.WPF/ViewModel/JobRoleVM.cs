@@ -1,4 +1,5 @@
-﻿using Demo.OrganizationalStructure.Common.DataModel;
+﻿using Demo.OrganizationalStructure.Client.WPF.Utils;
+using Demo.OrganizationalStructure.Common.DataModel;
 using Demo.OrganizationalStructure.Common.HubInterfaces;
 using System;
 using System.Collections.ObjectModel;
@@ -65,7 +66,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             {
                 if (_upperHierarchyJobRole != value)
                 {
-                    if (!ValidateNewUpperHierarchyValue(value, out Exception exception))
+                    if (!ValidateNewUpperHierarchyValue(value, out InvalidUpperHierarchyValueException exception))
                     {
                         ErrorMessageOfUpperHierarchyJobRole = exception.Message;
                         throw exception;
@@ -150,18 +151,18 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
 
         private bool ValidateNewUpperHierarchyValue(
             JobRoleVM value,
-            out Exception exception)
+            out InvalidUpperHierarchyValueException exception)
         {
             if (value == this)
             {
-                exception = new ArgumentException("Cannot set itself as upper hierarchy.");
+                exception = new InvalidUpperHierarchyValueException("Cannot set itself as upper hierarchy.");
                 return false;
             }
 
             var isRootFound = SearchForRoot(value);
             if (!isRootFound)
             {
-                exception = new ArgumentException("Hierarchy cannot be set.");
+                exception = new InvalidUpperHierarchyValueException("Hierarchy cannot be set.");
                 return false;
             }
 
