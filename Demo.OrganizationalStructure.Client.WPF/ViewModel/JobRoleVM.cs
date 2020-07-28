@@ -92,6 +92,11 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
             }
         }
 
+        internal void ClearExceptionMessage()
+        {
+            ErrorMessageOfUpperHierarchyJobRole = null;
+        }
+
         protected override void SaveNew()
         {
             CopyDataToModel();

@@ -81,6 +81,7 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(SelectedJobRole));
                     OnPropertyChanged(nameof(SelectedEmployee));
+                    SelectedJobRole?.ClearExceptionMessage(); //Note: this can be refactored
                 }
             }
         }
