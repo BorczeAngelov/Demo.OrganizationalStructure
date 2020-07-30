@@ -150,8 +150,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     SelectedItem = null;
                 }
+            }
 
-                _organisationDataModel.JobRoles.Remove(dataModel);
+            var localDataModel = _organisationDataModel.JobRoles.FirstOrDefault(x => x.EntityKey == dataModel.EntityKey);
+            if (localDataModel != null)
+            {
+                _organisationDataModel.JobRoles.Remove(localDataModel);
             }
         }
 
@@ -165,8 +169,12 @@ namespace Demo.OrganizationalStructure.Client.WPF.ViewModel
                 {
                     SelectedItem = null;
                 }
+            }
 
-                _organisationDataModel.Employees.Remove(dataModel);
+            var localDataModel = _organisationDataModel.Employees.FirstOrDefault(x => x.EntityKey == dataModel.EntityKey);
+            if (localDataModel != null)
+            {
+                _organisationDataModel.Employees.Remove(localDataModel);
             }
         }
 
