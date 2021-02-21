@@ -3,15 +3,16 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Threading.Tasks;
 
-namespace Demo.OrganizationalStructure.Client.Web.Data
+namespace Demo.OrganizationalStructure.Client.Web.Services
 {
-    internal class OrganizationalStructureSignalRHub
+    internal class OrgStructureService
     {
         private readonly HubConnection _serverConnection;
 
-        internal event Action<Organisation> LoadOrganisation;
+        internal Organisation Organisation { get; private set; }
+        internal event Action OrganisationLoaded;
 
-        public OrganizationalStructureSignalRHub()
+        public OrgStructureService()
         {
             var serverHubUrl = "http://localhost:5000/OrgaSHub";
 
@@ -25,7 +26,8 @@ namespace Demo.OrganizationalStructure.Client.Web.Data
 
         private void InvokeLoadOrganisation(Organisation organisation)
         {
-            LoadOrganisation?.Invoke(organisation);
+            Organisation = organisation;
+            OrganisationLoaded?.Invoke();
         }
 
         internal async Task ConnectWithServerAsync()

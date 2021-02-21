@@ -1,36 +1,74 @@
 ﻿@page "/fetchdatafromserver"
 
-@using Demo.OrganizationalStructure.Client.Web.Data
+@using Demo.OrganizationalStructure.Client.Web.Services
 @*@inject WeatherForecastService ForecastService*@
-@inject OrganizationalStructureSignalRHub OrganizationalStructureSignalRHub
+@inject OrgStructureService OrgStructureService
 
 <h1>FetchDataFromServer</h1>
 
-<h1>Counter</h1>
-
-<p>Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-<button class="btn btn-primary" @onclick="ConnectToServer">Connect to SignalR Server</button>
-
-
 <p>This component demonstrates fetching data from a service.</p>
 
+@if (OrgStructureService.Organisation == null)
+{
+    <button class="btn btn-primary" @onclick="ConnectToServer">Connect to SignalR Server</button>
+}
+else
+{
+    <p>JobRoles data</p>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EntityKey</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>UpperHierarchyJobRoleKey</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jobRole in OrgStructureService.Organisation.JobRoles)
+            {
+            <tr>
+                <td>@jobRole.EntityKey</td>
+                <td>@jobRole.Name</td>
+                <td>@jobRole.Description</td>
+                <td>@jobRole.UpperHierarchyJobRoleKey</td>
+            </tr>
+            }
+        </tbody>
+    </table>
 
-@code {    
+    <p>Employees data</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EntityKey</th>
+                <th>Name</th>
+                <th>JobRoleEntityKey</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in OrgStructureService.Organisation.Employees)
+            {
+                <tr>
+                    <td>@employee.EntityKey</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.JobRoleEntityKey</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
     private int currentCount = 0;
 
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        OrganizationalStructureSignalRHub.LoadOrganisation += obj =>
-        {
-            currentCount = obj.Employees.Count;
-            this.StateHasChanged();
-        };
+        return base.OnInitializedAsync();
     }
+
 
     private void IncrementCount()
     {
@@ -39,6 +77,13 @@
 
     private async void ConnectToServer()
     {
-        await OrganizationalStructureSignalRHub.ConnectWithServerAsync();
+
+        OrgStructureService.OrganisationLoaded += () =>
+        {
+            currentCount = OrgStructureService.Organisation.Employees.Count;
+            this.StateHasChanged();
+        };
+
+        await OrgStructureService.ConnectWithServerAsync();
     }
 }
