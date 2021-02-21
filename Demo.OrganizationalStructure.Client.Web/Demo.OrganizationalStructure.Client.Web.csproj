@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Demo.OrganizationalStructure.Common\Demo.OrganizationalStructure.Common.csproj" />
   </ItemGroup>
 
