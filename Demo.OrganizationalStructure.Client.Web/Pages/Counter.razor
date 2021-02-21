@@ -1,16 +1,43 @@
 ﻿@page "/counter"
 
+@using Demo.OrganizationalStructure.Client.Web.Data
+
+@inject OrganizationalStructureSignalRHub OrganizationalStructureSignalRHub
+
 <h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button class="btn btn-primary" @onclick="ConnectToServer">Connect to SignalR Server</button>
+
 @code {
     private int currentCount = 0;
+    private OrganizationalStructureSignalRHub _signalRHub;
 
     private void IncrementCount()
     {
         currentCount++;
     }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+        _signalRHub = new OrganizationalStructureSignalRHub();
+        _signalRHub.LoadOrganisation += obj=>
+        {
+            currentCount = obj.Employees.Count;
+            this.StateHasChanged();
+        };
+    }
+
+
+    private async void ConnectToServer()
+    {
+        await _signalRHub.ConnectWithServerAsync();
+    }
+
 }
