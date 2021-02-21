@@ -34,5 +34,11 @@ namespace Demo.OrganizationalStructure.Client.Web.Services
         {
             await _serverConnection.StartAsync();
         }
+
+        internal async Task ReconnectWithServerAsync()
+        {
+            await _serverConnection.StopAsync();
+            await _serverConnection.StartAsync();
+        }
     }
 }

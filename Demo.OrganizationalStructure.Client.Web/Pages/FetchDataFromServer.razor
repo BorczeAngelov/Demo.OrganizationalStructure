@@ -10,10 +10,12 @@
 
 @if (OrgStructureService.Organisation == null)
 {
-    <button class="btn btn-primary" @onclick="ConnectToServer">Connect to SignalR Server</button>
+    <button class="btn btn-primary" @onclick="ConnectToServer">Connect to server and fetch data</button>
 }
 else
 {
+    <button class="btn btn-primary" @onclick="ReconnectToServer">Re-fetch data from server</button>
+
     <p>JobRoles data</p>
 
     <table class="table">
@@ -28,12 +30,12 @@ else
         <tbody>
             @foreach (var jobRole in OrgStructureService.Organisation.JobRoles)
             {
-            <tr>
-                <td>@jobRole.EntityKey</td>
-                <td>@jobRole.Name</td>
-                <td>@jobRole.Description</td>
-                <td>@jobRole.UpperHierarchyJobRoleKey</td>
-            </tr>
+                <tr>
+                    <td>@jobRole.EntityKey</td>
+                    <td>@jobRole.Name</td>
+                    <td>@jobRole.Description</td>
+                    <td>@jobRole.UpperHierarchyJobRoleKey</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -85,5 +87,10 @@ else
         };
 
         await OrgStructureService.ConnectWithServerAsync();
+    }
+
+    private async void ReconnectToServer()
+    {
+        await OrgStructureService.ReconnectWithServerAsync();
     }
 }
