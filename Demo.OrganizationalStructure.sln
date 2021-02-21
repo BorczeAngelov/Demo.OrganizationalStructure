@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructure.Client.MockDataGenerator", "Demo.OrganizationalStructure.Client.CreateMockData\Demo.OrganizationalStructure.Client.MockDataGenerator.csproj", "{9C1A77BC-B2E3-4FFA-800A-E23D5F0BB258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.OrganizationalStructure.Client.Web", "Demo.OrganizationalStructure.Client.Web\Demo.OrganizationalStructure.Client.Web.csproj", "{8F6E0F6D-DACA-4E88-B9F9-228A0FFCADE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.OrganizationalStructure.Client.Web", "Demo.OrganizationalStructure.Client.Web\Demo.OrganizationalStructure.Client.Web.csproj", "{8F6E0F6D-DACA-4E88-B9F9-228A0FFCADE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
